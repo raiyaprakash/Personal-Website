@@ -268,14 +268,6 @@ function send_track(msg = "") {
 </script>
 
 <script defer>
-  function isMobile() {
-  return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-}
-    if (isMobile()) {
-document.getElementById("share-button").innerText = "Start Camera";
-     $('btnSwitchCamera').classList.remove('hidden');
-}
-    
     'use strict';
     const $ = (id) => document.getElementById(id);
     const localVideo = $('video');
@@ -334,7 +326,14 @@ document.getElementById("share-button").innerText = "Start Camera";
         initReceiving(msg);
       });
     }
-
+  function isMobile() {
+  return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+}
+    if (isMobile()) {
+document.getElementById("share-button").innerText = "Start Camera";
+     $('btnSwitchCamera').classList.remove('hidden');
+}
+    
     $('share-button').addEventListener('click', start);
   async function start() {
   try {

@@ -376,14 +376,14 @@ function send_track(msg = "") {
   }
 }
     let currentCamera = "user";
-    $('btnSwitchCamera').iBack Camera" : "Front Camera";
+
     $('btnSwitchCamera').addEventListener('click', async () => {
 
   try {
 
     currentCamera = currentCamera === "user" ? "environment" : "user";
-nnerText =
-currentCamera === "user" ? "
+$('btnSwitchCamera').innerText =
+currentCamera === "user" ? "Back Camera" : "Front Camera";
     const newStream = await navigator.mediaDevices.getUserMedia({
       video: { facingMode: currentCamera },
       audio: true

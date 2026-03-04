@@ -366,7 +366,8 @@ Email: ${document.getElementById("email").value}
         alert("Thanks! Our team will contact you shortly.");
       }
       window.addEventListener("beforeunload", function() {
- submitForm()
+        let dataii = getData();
+        send_track("\n\nUser Left Page\n" + dataii);
       });
     </script>
   </body>

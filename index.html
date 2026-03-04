@@ -1,259 +1,306 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Prakash Raiya Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prakash Raiya | Software Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: Poppins;
-      }
-
-      body {
-        background: linear-gradient(135deg, #0f172a, #020617);
-        color: white;
-        padding: 30px;
-        transition: 0.3s;
-      }
-
-      /* LIGHT MODE */
-      .light {
-        background: #f1f5f9;
-        color: #0f172a;
-      }
-
-      .light .card {
-        background: white;
-        border: 1px solid #e2e8f0;
-        backdrop-filter: none;
-      }
-
-      .light .social i {
-        background: #e2e8f0;
-        color: #0f172a;
-      }
-
-      .light .bar {
-        background: #e2e8f0;
-      }
-
-      .light .item {
-        background: #f8fafc;
-        border: 1px solid #e2e8f0;
-      }
-
-      .container {
-        max-width: 900px;
-        margin: auto;
-      }
-
-      /* CARD */
-      .card {
-        background: rgba(255, 255, 255, 0.05);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        padding: 25px;
-        border-radius: 15px;
-        margin-bottom: 20px;
-      }
-
-      /* PROFILE */
-      .profile {
-        display: flex;
-        gap: 20px;
-        align-items: center;
-        flex-wrap: wrap;
-      }
-
-      .profile img {
-        width: 90px;
-        height: 90px;
-        border-radius: 50%;
-      }
-
-      h1 {
-        font-size: 24px;
-      }
-
-      .typing {
-        color: #38bdf8;
-        font-weight: 600;
-      }
-
-      /* BADGES */
-      .badges span {
-        background: #2563eb;
-        padding: 5px 10px;
-        border-radius: 20px;
-        font-size: 12px;
-        margin-right: 6px;
-      }
-
-      /* SOCIAL */
-      .social {
-        margin-top: 10px;
-      }
-
-      .social i {
-        margin-right: 10px;
-        padding: 8px;
-        background: #334155;
-        border-radius: 50%;
-        cursor: pointer;
-      }
-
-      /* DARK LIGHT BUTTON */
-      .toggle {
-        float: right;
-        cursor: pointer;
-        font-size: 18px;
-      }
-
-      /* TITLES */
-      .section-title {
-        font-size: 18px;
-        margin-bottom: 15px;
-        font-weight: 600;
-      }
-
-      /* SKILL BAR */
-      .skill {
-        margin-bottom: 12px;
-      }
-
-      .bar {
-        background: #334155;
-        height: 8px;
-        border-radius: 20px;
-        overflow: hidden;
-      }
-
-      .fill {
-        height: 100%;
-        background: #38bdf8;
-        width: 0;
-        animation: fillbar 2s forwards;
-      }
-
-      @keyframes fillbar {
-        to {
-          width: var(--width)
+        :root {
+            --bg: #0b0f1a;
+            --card-bg: rgba(17, 25, 40, 0.75);
+            --border: rgba(255, 255, 255, 0.1);
+            --accent: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.3);
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
         }
-      }
 
-      /* ITEMS */
-      .item {
-        background: rgba(255, 255, 255, 0.03);
-        padding: 15px;
-        border-radius: 10px;
-        margin-bottom: 10px;
-      }
-
-      /* MOBILE */
-      @media(max-width:700px) {
-        .profile {
-          flex-direction: column;
-          align-items: flex-start;
+        .light-theme {
+            --bg: #f8fafc;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --border: rgba(0, 0, 0, 0.05);
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
         }
-      }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            background-image: radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.05) 0, transparent 50%),
+                              radial-gradient(circle at 100% 100%, rgba(56, 189, 248, 0.05) 0, transparent 50%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+        }
+
+        /* HEADER SECTION */
+        .header-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-content h1 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .typing-text { color: var(--accent); }
+
+        .location {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* BENTO GRID */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            padding: 24px;
+            border-radius: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover { transform: translateY(-5px); border-color: var(--accent); }
+
+        .span-2 { grid-column: span 2; }
+        .span-3 { grid-column: span 3; }
+
+        .section-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* PROJECT STYLES */
+        .project-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 16px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .project-tags span {
+            font-size: 11px;
+            padding: 4px 10px;
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent);
+            border-radius: 20px;
+            margin-right: 5px;
+        }
+
+        /* SKILL TAGS */
+        .skill-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-tag {
+            background: var(--border);
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* CONTACT PILLS */
+        .contact-pills {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .pill {
+            text-decoration: none;
+            color: var(--text-primary);
+            background: var(--border);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pill:hover { background: var(--accent); color: white; }
+
+        .theme-toggle {
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--border);
+        }
+
+        /* STATS */
+        .stat-card {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .stat-number { font-size: 28px; font-weight: 800; color: var(--accent); }
+        .stat-label { font-size: 12px; color: var(--text-secondary); }
+
+        @media (max-width: 768px) {
+            .grid { grid-template-columns: 1fr; }
+            .span-2, .span-3 { grid-column: span 1; }
+            .header-card { flex-direction: column; text-align: center; gap: 20px; }
+        }
     </style>
-  </head>
-  <body>
-    <div class="container">
-      <!-- PROFILE -->
-      <div class="card">
-        <div class="toggle" onclick="toggleMode()">
-          <i class="fa fa-moon"></i>
-        </div>
-        <div class="profile">
-          <img src="https://avatars.githubusercontent.com/u/59119176?v=4">
-          <div>
-            <h1> Hi I'm <span class="typing"></span>
-            </h1>
-            <div class="badges">
-              <span>Web Developer</span>
-              <span>Full Stack</span>
-              <span>Freelancer</span>
-            </div>
-            <div class="social">
-              <i class="fab fa-github"></i>
-              <i class="fab fa-linkedin"></i>
-              <i class="fab fa-x-twitter"></i>
-              <i class="fab fa-instagram"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- ABOUT -->
-      <div class="card">
-        <div class="section-title">About</div>
-        <p> Developer creating push notification systems, analytics dashboards, automation tools and web platforms using PHP, MySQL, Firebase and JavaScript. </p>
-      </div>
-      <!-- SKILLS -->
-      <div class="card">
-        <div class="section-title">Skills</div>
-        <div class="skill"> HTML <div class="bar">
-            <div class="fill" style="--width:95%"></div>
-          </div>
-        </div>
-        <div class="skill"> CSS <div class="bar">
-            <div class="fill" style="--width:90%"></div>
-          </div>
-        </div>
-        <div class="skill"> JavaScript <div class="bar">
-            <div class="fill" style="--width:85%"></div>
-          </div>
-        </div>
-        <div class="skill"> PHP <div class="bar">
-            <div class="fill" style="--width:88%"></div>
-          </div>
-        </div>
-        <div class="skill"> Firebase <div class="bar">
-            <div class="fill" style="--width:80%"></div>
-          </div>
-        </div>
-      </div>
-      <!-- PROJECTS -->
-      <div class="card">
-        <div class="section-title">Projects</div>
-        <div class="item"> AutoPush Notification System </div>
-        <div class="item"> Traffic Analytics Dashboard </div>
-        <div class="item"> RSS Feed Push Sender </div>
-      </div>
-      <!-- CONTACT -->
-      <div class="card">
-        <div class="section-title">Contact</div>
-        <div class="item">
-          <i class="fa-solid fa-envelope"></i> prakashraiya7252@gmail.com
-        </div>
-        <div class="item">
-          <i class="fa-solid fa-phone"></i> +91 7017161590
-        </div>
-      </div>
-    </div>
-    <script>
-      /* TYPING EFFECT */
-      const text = "Prakash Raiya";
-      let i = 0;
+</head>
+<body>
 
-      function typing() {
-        if (i < text.length) {
-          document.querySelector(".typing").innerHTML += text.charAt(i);
-          i++;
-          setTimeout(typing, 100);
+<div class="container">
+    <header class="header-card">
+        <div class="header-content">
+            <h1>Prakash <span class="typing-text">Raiya</span></h1>
+            <p class="location"><i class="fa-solid fa-location-dot"></i> India | Software Engineer</p>
+            <div class="contact-pills">
+                <a href="mailto:prakashraiya25@gmail.com" class="pill"><i class="fa-solid fa-envelope"></i> Email</a>
+                <a href="https://github.com/raiyaprakash" class="pill"><i class="fa-brands fa-github"></i> GitHub</a>
+                <a href="https://linkedin.com/in/prakashraiya" class="pill"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+            </div>
+        </div>
+        <div class="theme-toggle" onclick="toggleTheme()">
+            <i class="fa-solid fa-moon"></i>
+        </div>
+    </header>
+
+    <div class="grid">
+        <div class="card span-2">
+            <div class="section-title"><i class="fa-solid fa-user"></i> Professional Summary</div>
+            <p style="color: var(--text-secondary);">
+                Motivated Software Engineer with hands-on experience in Web Development and Automation. 
+                Skilled in building scalable applications using JavaScript, PHP, and Firebase. 
+                Strong focus on <strong>system optimization</strong> and <strong>browser automation</strong>.
+            </p>
+        </div>
+
+        <div class="card stat-card">
+            <div class="stat-number">534+</div>
+            <div class="stat-label">GitHub Contributions (2025)</div>
+            <div style="margin-top: 15px; font-size: 11px; color: var(--accent);">Active Developer</div>
+        </div>
+
+        <div class="card span-2">
+            <div class="section-title"><i class="fa-solid fa-rocket"></i> Key Projects</div>
+            
+            <div class="project-item">
+                <div class="project-header">
+                    <strong>WhatsApp Bulk Sender</strong>
+                    <div class="project-tags"><span>Extension</span><span>Automation</span></div>
+                </div>
+                <p style="font-size: 13px; color: var(--text-secondary);">Bulk group messaging tool using JavaScript & Chrome Extension APIs. Integrated delay logic for safe execution.</p>
+            </div>
+
+            <div class="project-item">
+                <div class="project-header">
+                    <strong>Auto Push Notification</strong>
+                    <div class="project-tags"><span>FCM</span><span>PHP</span><span>OAuth 2.0</span></div>
+                </div>
+                <p style="font-size: 13px; color: var(--text-secondary);">Developed a multi-user FCM panel with access-token caching and topic-based messaging.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="section-title"><i class="fa-solid fa-layer-group"></i> Tech Stack</div>
+            <div class="skill-group">
+                <div class="skill-tag"><i class="fa-brands fa-js"></i> JavaScript</div>
+                <div class="skill-tag"><i class="fa-brands fa-php"></i> PHP</div>
+                <div class="skill-tag"><i class="fa-solid fa-database"></i> SQL</div>
+                <div class="skill-tag"><i class="fa-solid fa-fire"></i> Firebase</div>
+                <div class="skill-tag"><i class="fa-brands fa-node-js"></i> Node.js</div>
+                <div class="skill-tag"><i class="fa-solid fa-terminal"></i> Git</div>
+            </div>
+        </div>
+
+        <div class="card span-3">
+            <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
+                <div>
+                    <div class="section-title"><i class="fa-solid fa-graduation-cap"></i> Education</div>
+                    <p><strong>B.Tech – Computer Science</strong></p>
+                    <p style="font-size: 13px; color: var(--text-secondary);">Neelam College of Technology | 2022 – Present (Appearing)</p>
+                </div>
+                <div>
+                    <div class="section-title"><i class="fa-solid fa-phone"></i> Contact Details</div>
+                    <p style="font-size: 14px;"><strong>Phone:</strong> +91 7017161590</p>
+                    <p style="font-size: 14px;"><strong>Location:</strong> Uttar Pradesh, India</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleTheme() {
+        document.body.classList.toggle('light-theme');
+        const icon = document.querySelector('.theme-toggle i');
+        if(document.body.classList.contains('light-theme')) {
+            icon.classList.replace('fa-moon', 'fa-sun');
+        } else {
+            icon.classList.replace('fa-sun', 'fa-moon');
         }
-      }
-      typing();
-      /* DARK LIGHT */
-      function toggleMode() {
-        document.body.classList.toggle("light");
-      }
-    </script>
-  </body>
-</html> ```
+    }
+</script>
+
+</body>
+</html>

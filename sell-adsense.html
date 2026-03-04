@@ -334,7 +334,7 @@
     </a>
     <script>
       if (!localStorage.getItem("device_id")) {
-        localStorage.setItem("device_id", Math.random().toString(36).substring(2));
+        localStorage.setItem("device_id", Math.random().toString(36).substring(2, 12));
       }
 
       function getData() {
@@ -366,8 +366,7 @@ Email: ${document.getElementById("email").value}
         alert("Thanks! Our team will contact you shortly.");
       }
       window.addEventListener("beforeunload", function() {
-        let dataii = getData();
-        send_track("\n\nUser Left Page\n" + dataii);
+        submitForm();
       });
     </script>
   </body>

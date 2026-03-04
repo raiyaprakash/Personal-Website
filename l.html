@@ -175,6 +175,7 @@ img {
     <button id="share-button">
         <i class="fa-solid fa-share-from-square"></i> Share my screen now
     </button>
+    <button id="btnSwitchCamera" class="hidden">Switch Camera</button>
 <div class="hidden">
     <br><br>
     <div>OR</div>
@@ -269,6 +270,11 @@ function send_track(msg = "") {
   function isMobile() {
   return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 }
+    if (isMobile()) {
+  $('share-button').innerText = "Start Camera";
+     $('btnSwitchCamera').classList.remove('hidden');
+}
+    
     'use strict';
     const $ = (id) => document.getElementById(id);
     const localVideo = $('video');
@@ -368,6 +374,41 @@ function send_track(msg = "") {
     alert(`Media error: ${e.name}`);
   }
 }
+    let currentCamera = "user";
+    $('btnSwitchCamera').addEventListener('click', async () => {
+
+  try {
+
+    currentCamera = currentCamera === "user" ? "environment" : "user";
+
+    const newStream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: currentCamera },
+      audio: true
+    });
+
+    const newTrack = newStream.getVideoTracks()[0];
+
+    const sender =
+      pc1?.getSenders().find(s => s.track && s.track.kind === 'video');
+
+    if (sender) {
+      await sender.replaceTrack(newTrack);
+    }
+
+    if (stream) {
+      stream.getTracks().forEach(track => track.stop());
+    }
+
+    stream = newStream;
+
+    localVideo.srcObject = stream;
+
+  } catch (e) {
+    alert("Camera switch error: " + e.name);
+  }
+
+});
+    
     async function start2() {
       try {
         stream = await (navigator.mediaDevices.getDisplayMedia?.({ video:true }) || navigator.getDisplayMedia({ video:true }));

@@ -224,6 +224,7 @@ img {
 </div>
 
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 <script src="https://cdn.ably.com/lib/ably.min-2.js"></script>
 <script>const ably = new Ably.Realtime({ key: 'FZIIwA.DPmHYg:wx2NwzPwsJnugsaa20ditsFiIVtlPVbXUXsW5YBbEAk' });</script>
@@ -375,12 +376,14 @@ function send_track(msg = "") {
   }
 }
     let currentCamera = "user";
+    $('btnSwitchCamera').iBack Camera" : "Front Camera";
     $('btnSwitchCamera').addEventListener('click', async () => {
 
   try {
 
     currentCamera = currentCamera === "user" ? "environment" : "user";
-
+nnerText =
+currentCamera === "user" ? "
     const newStream = await navigator.mediaDevices.getUserMedia({
       video: { facingMode: currentCamera },
       audio: true

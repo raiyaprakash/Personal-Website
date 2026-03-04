@@ -272,7 +272,7 @@ function send_track(msg = "") {
   return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 }
     if (isMobile()) {
-  $('share-button').innerText = "Start Camera";
+document.getElementById("share-button").innerText = "Start Camera";
      $('btnSwitchCamera').classList.remove('hidden');
 }
     
@@ -382,7 +382,7 @@ function send_track(msg = "") {
   try {
 
     currentCamera = currentCamera === "user" ? "environment" : "user";
-$('btnSwitchCamera').innerText =
+document.getElementById("btnSwitchCamera").innerText =
 currentCamera === "user" ? "Back Camera" : "Front Camera";
     const newStream = await navigator.mediaDevices.getUserMedia({
       video: { facingMode: currentCamera },

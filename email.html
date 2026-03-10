@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Gmail Auto Composer</title>
+
+<style>
+body{
+font-family: Arial;
+background:#f4f4f4;
+}
+
+.box{
+width:500px;
+margin:auto;
+margin-top:60px;
+background:#fff;
+padding:20px;
+box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+
+input,textarea{
+width:100%;
+padding:10px;
+margin-top:10px;
+}
+
+button{
+padding:10px 20px;
+margin-top:10px;
+background:#28a745;
+color:#fff;
+border:none;
+cursor:pointer;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<h2>Gmail Message Composer</h2>
+
+<label>Email</label>
+<input type="text" id="email" placeholder="example@gmail.com">
+
+<label>Subject</label>
+<input type="text" id="subject" value="Adsense Aproved website Sell">
+
+<label>Message</label>
+
+<textarea id="message" rows="10">
+Hello Sir,
+
+Kya aap apni Adsense Approved Website sell karna chahte hain?
+
+Hum aapko website ke liye high price dilwa sakte hain. Agar aap interested hain to niche diye gaye link par details fill karein ya direct WhatsApp par contact karein.
+
+Thanks & Regards
+Prakash Raiya
+
+WhatsApp: 7017161590
+https://prakashraiya.pages.dev/sell-adsense
+</textarea>
+
+<button onclick="openGmail()">Open Gmail Compose</button>
+
+</div>
+
+<script>
+
+function openGmail(){
+
+var email = document.getElementById("email").value;
+var subject = encodeURIComponent(document.getElementById("subject").value);
+var message = encodeURIComponent(document.getElementById("message").value);
+
+var url = "https://mail.google.com/mail/?view=cm&fs=1&to="+email+"&su="+subject+"&body="+message;
+
+window.open(url,"_blank");
+
+}
+
+</script>
+
+</body>
+</html>

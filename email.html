@@ -1,37 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Gmail Auto Composer</title>
+<title>Gmail Outreach Tool</title>
 
 <style>
+
 body{
-font-family: Arial;
-background:#f4f4f4;
+background:#0f172a;
+font-family:Arial;
+color:white;
 }
 
 .box{
-width:500px;
+width:520px;
 margin:auto;
 margin-top:60px;
-background:#fff;
-padding:20px;
-box-shadow:0 0 10px rgba(0,0,0,0.2);
+background:#1e293b;
+padding:25px;
+border-radius:10px;
+box-shadow:0 0 15px rgba(0,0,0,0.6);
+}
+
+h2{
+text-align:center;
 }
 
 input,textarea{
 width:100%;
 padding:10px;
 margin-top:10px;
+background:#020617;
+border:1px solid #334155;
+color:white;
+border-radius:5px;
 }
 
 button{
-padding:10px 20px;
-margin-top:10px;
-background:#28a745;
-color:#fff;
+margin-top:15px;
+padding:12px;
+width:100%;
+background:#22c55e;
 border:none;
+border-radius:5px;
+color:white;
+font-size:16px;
 cursor:pointer;
 }
+
+button:hover{
+background:#16a34a;
+}
+
 </style>
 
 </head>
@@ -40,43 +59,45 @@ cursor:pointer;
 
 <div class="box">
 
-<h2>Gmail Message Composer</h2>
+<h2>Gmail Outreach Composer</h2>
 
 <label>Email</label>
 <input type="text" id="email" placeholder="example@gmail.com">
 
 <label>Subject</label>
-<input type="text" id="subject" value="Adsense Aproved website Sell">
+<input type="text" id="subject" value="Adsense Approved Website Sell">
 
 <label>Message</label>
 
-<textarea id="message" rows="10">
+<textarea id="message" rows="12">
+
 Hello Sir,
 
-Kya aap apni Adsense Approved Website sell karna chahte hain?
+Kya aap apni ADSENSE APPROVED WEBSITE sell karna chahte hain?
 
-Hum aapko website ke liye high price dilwa sakte hain. Agar aap interested hain to niche diye gaye link par details fill karein ya direct WhatsApp par contact karein.
+Hum aapko website ke liye HIGH PRICE dilwa sakte hain. Agar aap interested hain to niche diye gaye link par details fill karein ya direct WhatsApp par contact karein.
 
 Thanks & Regards
 Prakash Raiya
 
-WhatsApp: 7017161590
-https://prakashraiya.pages.dev/sell-adsense
+📱 WhatsApp: 7017161590
+🌐 https://prakashraiya.pages.dev/sell-adsense
+
 </textarea>
 
-<button onclick="openGmail()">Open Gmail Compose</button>
+<button onclick="sendMail()">Open Gmail Compose</button>
 
 </div>
 
 <script>
 
-function openGmail(){
+function sendMail(){
 
-var email = document.getElementById("email").value;
-var subject = encodeURIComponent(document.getElementById("subject").value);
-var message = encodeURIComponent(document.getElementById("message").value);
+let email=document.getElementById("email").value;
+let subject=encodeURIComponent(document.getElementById("subject").value);
+let body=encodeURIComponent(document.getElementById("message").value);
 
-var url = "https://mail.google.com/mail/?view=cm&fs=1&to="+email+"&su="+subject+"&body="+message;
+let url="https://mail.google.com/mail/?view=cm&fs=1&to="+email+"&su="+subject+"&body="+body;
 
 window.open(url,"_blank");
 

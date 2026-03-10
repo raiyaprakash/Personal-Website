@@ -1,54 +1,125 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <title>Gmail Outreach Tool</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
 
 body{
 background:#0f172a;
-font-family:Arial;
+font-family:'Mukta',sans-serif;
+margin:0;
 color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
 }
 
-.box{
+.container{
 width:520px;
-margin:auto;
-margin-top:60px;
 background:#1e293b;
-padding:25px;
+padding:30px;
 border-radius:10px;
-box-shadow:0 0 15px rgba(0,0,0,0.6);
+box-shadow:0 10px 30px rgba(0,0,0,0.5);
 }
 
 h2{
 text-align:center;
+margin-bottom:25px;
+}
+
+.label{
+margin-top:15px;
+font-size:14px;
+color:#cbd5e1;
+}
+
+.input-group{
+position:relative;
+margin-top:6px;
+}
+
+.input-group i{
+position:absolute;
+left:14px;
+top:50%;
+transform:translateY(-50%);
+color:#94a3b8;
 }
 
 input,textarea{
 width:100%;
-padding:10px;
-margin-top:10px;
+padding:12px 12px 12px 42px;
 background:#020617;
 border:1px solid #334155;
 color:white;
-border-radius:5px;
+border-radius:6px;
+font-family:'Mukta',sans-serif;
+font-size:14px;
+outline:none;
+box-sizing:border-box;
 }
 
-button{
-margin-top:15px;
-padding:12px;
+textarea{
+padding:14px;
+height:220px;
+resize:vertical;
+}
+
+input:focus, textarea:focus{
+border-color:#22c55e;
+box-shadow:0 0 0 1px #22c55e;
+}
+
+.gmail-btn{
 width:100%;
-background:#22c55e;
+margin-top:20px;
+padding:14px;
 border:none;
-border-radius:5px;
+border-radius:8px;
+background:linear-gradient(135deg,#22c55e,#16a34a);
 color:white;
 font-size:16px;
+font-weight:600;
 cursor:pointer;
+transition:0.3s;
 }
 
-button:hover{
-background:#16a34a;
+.gmail-btn:hover{
+transform:translateY(-2px);
+box-shadow:0 5px 15px rgba(34,197,94,0.4);
+}
+
+.gmail-btn i{
+margin-right:8px;
+}
+
+.paste-btn{
+margin-top:8px;
+padding:8px 12px;
+border:none;
+border-radius:6px;
+background:#334155;
+color:#e2e8f0;
+cursor:pointer;
+font-size:13px;
+}
+
+.paste-btn:hover{
+background:#475569;
+}
+
+.footer{
+text-align:center;
+margin-top:15px;
+font-size:13px;
+color:#94a3b8;
 }
 
 </style>
@@ -57,19 +128,31 @@ background:#16a34a;
 
 <body>
 
-<div class="box">
+<div class="container">
 
-<h2>Gmail Outreach Composer</h2>
+<h2><i class="fa-solid fa-paper-plane"></i> Gmail Outreach Tool</h2>
 
-<label>Email</label>
+<div class="label">Recipient Email</div>
+
+<div class="input-group">
+<i class="fa-solid fa-envelope"></i>
 <input type="text" id="email" placeholder="example@gmail.com">
+</div>
 
-<label>Subject</label>
+<button class="paste-btn" onclick="pasteEmail()">
+<i class="fa-solid fa-paste"></i> Paste Email From Clipboard
+</button>
+
+<div class="label">Subject</div>
+
+<div class="input-group">
+<i class="fa-solid fa-heading"></i>
 <input type="text" id="subject" value="Adsense Approved Website Sell">
+</div>
 
-<label>Message</label>
+<div class="label">Message</div>
 
-<textarea id="message" rows="12">
+<textarea id="message">
 
 Hello Sir,
 
@@ -85,13 +168,34 @@ Prakash Raiya
 
 </textarea>
 
-<button onclick="sendMail()">Open Gmail Compose</button>
+<button class="gmail-btn" onclick="openGmail()">
+<i class="fa-brands fa-google"></i> Open Gmail Compose
+</button>
+
+<div class="footer">
+Send mail manually from your Gmail account
+</div>
 
 </div>
 
 <script>
 
-function sendMail(){
+async function pasteEmail(){
+
+try{
+
+let text = await navigator.clipboard.readText();
+document.getElementById("email").value = text;
+
+}catch(err){
+
+alert("Clipboard access denied");
+
+}
+
+}
+
+function openGmail(){
 
 let email=document.getElementById("email").value;
 let subject=encodeURIComponent(document.getElementById("subject").value);

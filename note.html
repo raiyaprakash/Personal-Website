@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Advanced Notepad Tool</title>
+
+<style>
+
+body{
+margin:0;
+background:#1e1e1e;
+font-family:Arial;
+color:white;line-height:2
+}
+
+.toolbar{
+background:#2d2d2d;
+padding:10px;
+border-bottom:1px solid #444;
+display:flex;
+gap:10px;
+align-items:center;
+flex-wrap:wrap;
+}
+
+button{
+background:#0078d7;
+border:none;
+color:white;
+padding:6px 12px;
+cursor:pointer;
+border-radius:4px;
+}
+
+button:hover{
+background:#0a84ff;
+}
+
+.container{
+display:flex;
+height:calc(100vh - 60px);
+}
+
+#lineNumbers{
+background:#252526;
+color:#aaa;
+padding:10px;
+text-align:right;
+user-select:none;
+overflow:hidden;
+}
+
+textarea{
+flex:1;
+background:#1e1e1e;
+color:white;
+border:none;
+outline:none;
+padding:10px;
+resize:none;
+font-family:monospace;line-height:2
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="toolbar">
+
+<label>Font Size</label>
+<input type="range" id="fontSize" min="10" max="40" value="16">
+
+<span id="sizeValue">16px</span>
+
+<button onclick="removeDuplicates()">Remove Duplicate</button>
+
+<button onclick="extractDomains()">Extract Domains</button>
+
+</div>
+
+<div class="container">
+
+<div id="lineNumbers">1</div>
+
+<textarea id="editor" spellcheck="false"></textarea>
+
+</div>
+
+<script>
+
+const editor = document.getElementById("editor");
+const lineNumbers = document.getElementById("lineNumbers");
+const fontSize = document.getElementById("fontSize");
+const sizeValue = document.getElementById("sizeValue");
+
+function updateLines(){
+let lines = editor.value.split("\n").length;
+let numbers="";
+for(let i=1;i<=lines;i++){
+numbers+=i+"<br>";
+}
+lineNumbers.innerHTML=numbers;
+}
+
+editor.addEventListener("input",updateLines);
+
+editor.addEventListener("scroll",()=>{
+lineNumbers.scrollTop=editor.scrollTop;
+});
+
+fontSize.addEventListener("input",()=>{
+editor.style.fontSize=fontSize.value+"px";
+lineNumbers.style.fontSize=fontSize.value+"px";
+sizeValue.innerText=fontSize.value+"px";
+});
+
+function removeDuplicates(){
+
+let lines=editor.value.split("\n");
+
+let unique=[...new Set(lines)];
+
+editor.value=unique.join("\n");
+
+updateLines();
+
+}
+
+function extractDomains(){
+
+let lines=editor.value.split("\n");
+
+let domains=[];
+
+lines.forEach(url=>{
+
+url=url.trim();
+
+if(url){
+
+try{
+
+let domain=(new URL(url)).hostname;
+
+domains.push(domain);
+
+}catch{
+
+}
+
+}
+
+});
+
+editor.value=domains.join("\n");
+
+updateLines();
+
+}
+
+updateLines();
+
+</script>
+
+</body>
+</html>

@@ -4,13 +4,17 @@
 <meta charset="UTF-8">
 <title>Advanced Notepad Tool</title>
 
+<!-- Mukta Font -->
+<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;600&display=swap" rel="stylesheet">
+
 <style>
 
 body{
 margin:0;
 background:#1e1e1e;
-font-family:Arial;
-color:white;line-height:2
+font-family:'Mukta',sans-serif;
+color:white;
+line-height:2;
 }
 
 .toolbar{
@@ -30,6 +34,7 @@ color:white;
 padding:6px 12px;
 cursor:pointer;
 border-radius:4px;
+font-family:'Mukta',sans-serif;
 }
 
 button:hover{
@@ -48,6 +53,7 @@ padding:10px;
 text-align:right;
 user-select:none;
 overflow:hidden;
+font-family:'Mukta',monospace;
 }
 
 textarea{
@@ -58,7 +64,9 @@ border:none;
 outline:none;
 padding:10px;
 resize:none;
-font-family:monospace;line-height:2
+font-family:'Mukta',monospace;
+line-height:2;
+font-size:16px;
 }
 
 </style>
@@ -145,9 +153,7 @@ let domain=(new URL(url)).hostname;
 
 domains.push(domain);
 
-}catch{
-
-}
+}catch{}
 
 }
 

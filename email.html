@@ -179,7 +179,22 @@ Send mail manually from your Gmail account
 </div>
 
 <script>
+const textarea = document.getElementById("message");
 
+// Page load hone par saved data load karo
+window.onload = function () {
+    const savedText = localStorage.getItem("messageData");
+    if (savedText) {
+        textarea.value = savedText;
+    }
+};
+
+// Jab bhi user type kare → save hota rahe
+textarea.addEventListener("input", function () {
+    localStorage.setItem("messageData", textarea.value);
+});
+
+  
 async function pasteEmail(){
 
 try{

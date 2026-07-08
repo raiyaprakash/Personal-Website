@@ -18,6 +18,7 @@ function save_online() {
 </script>
 <div class='cnoti' id='snotif'></div>
 <script>
+
 const API="/noteapi";
 
 const textarea=document.getElementById("smessage");
@@ -25,6 +26,21 @@ const noteid=document.getElementById("noteid");
 const status=document.getElementById("snotif");
 
 let timer;
+
+noteid.addEventListener("input", function () {
+
+    // Allow only English letters and numbers
+    this.value = this.value.replace(/[^a-zA-Z0-9]/g, "");
+
+    localStorage.setItem("note_id", this.value);
+
+    load_local();
+
+    if (this.value) {
+        load_online();
+    }
+
+});
 
 /* ---------- Status ---------- */
 

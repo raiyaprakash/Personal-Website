@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"/>
+<title>Online NotePad</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<style>@-webkit-keyframes slidein{0%{opacity:0}20%,50%,80%{opacity:1;bottom:62px}to{opacity:0;bottom:-200px;visibility:hidden}}@keyframes slidein{0%{opacity:0}20%,50%,80%{opacity:1;bottom:62px}to{opacity:0;bottom:-200px;vibility:hidden}}body{background:#313030;margin:0;font-family:-apple-system,BlinkMacSystemFont,"Roboto","Segoe UI","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif;padding:20px 0 0;color:#fff}textarea{width:99%;height:300px;padding:5px;}.text-center,body,button,input{text-align:center}button,textarea,input{background:#555;color:#fff}button,input{box-sizing:border-box;font:inherit;font-size:14px;font-weight:500;line-height:1.2;cursor:pointer;border:2px solid transparent;padding:5px 10px;display:inline-block;margin:10px 5px}button:active,button:focus,input:focus,input:active{outline:0;border-color:#ff0}*{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}.cnoti{display:flex;position:fixed;left:10px;bottom:0}.cnoti span{display:block;position:relative;bottom:-200px;width:240px;margin:0 auto;padding:10px;border-radius:4px;background-color:#222;color:#fefefe;line-height:22px;text-align:center;opacity:0;transition:all .3s ease-in-out;-webkit-transition:all .3s ease-in-out;-webkit-animation:slidein 2s ease forwards;animation:slidein 2s ease forwards}
+</style>
+</head><body>
+<textarea id='smessage' name="text" spellcheck="false" placeholder="Enter text lines here..." required style="margin-bottom: 0; white-space: pre-wrap !important; word-wrap: normal !important; overflow-x: auto !important;"></textarea>
+<button type="button"  onclick="save_online()">Save</button>
+<input type="text" id="noteid" placeholder="Note ID">
+
+<button type="button" onclick="generate_bold_clear()">Clear</button>
+<script>
+function save_online() {
+
+}
+</script>
+<div class='cnoti' id='snotif'></div>
+<script>
+const API="/noteapi";
+
+const textarea=document.getElementById("smessage");
+const noteid=document.getElementById("noteid");
+const status=document.getElementById("snotif");
+
+let timer;
+
+/* ---------- Status ---------- */
+
+function setStatus(txt){
+    status.textContent=txt;
+}
+
+/* ---------- Local Save ---------- */
+
+function save_local(){
+
+    if(!noteid.value.trim()) return;
+
+    localStorage.setItem("note_id",noteid.value);
+
+    localStorage.setItem(
+        "note_"+noteid.value,
+        textarea.value
+    );
+
+}
+
+/* ---------- Local Load ---------- */
+
+function load_local(){
+
+    const id=noteid.value.trim();
+
+    textarea.value=localStorage.getItem("note_"+id)||"";
+
+}
+
+/* ---------- Online Load ---------- */
+
+async function load_online(){
+
+    const id=noteid.value.trim();
+
+    if(!id) return;
+
+    setStatus("Loading...");
+
+    try{
+
+        const r=await fetch(API+"?id="+encodeURIComponent(id));
+
+        const d=await r.json();
+
+        if(d.success){
+
+            textarea.value=d.content||"";
+
+            save_local();
+
+            setStatus("Loaded");
+
+        }else{
+
+            setStatus("Ready");
+
+        }
+
+    }catch(e){
+
+        setStatus("Offline");
+
+    }
+
+}
+
+/* ---------- Online Save ---------- */
+
+async function save_online(){
+
+    const id=noteid.value.trim();
+
+    if(!id){
+
+        alert("Enter Note ID");
+
+        return;
+
+    }
+
+    save_local();
+
+    setStatus("Saving...");
+
+    try{
+
+        const r=await fetch(API,{
+
+            method:"POST",
+
+            headers:{
+                "Content-Type":"application/json"
+            },
+
+            body:JSON.stringify({
+
+                id:id,
+
+                content:textarea.value
+
+            })
+
+        });
+
+        const d=await r.json();
+
+        if(d.success){
+
+            setStatus("Saved ✓");
+
+        }else{
+
+            setStatus("Error");
+
+        }
+
+    }catch(e){
+
+        setStatus("Offline (Local Saved)");
+
+    }
+
+}
+
+/* ---------- Startup ---------- */
+
+window.addEventListener("load",()=>{
+
+    noteid.value=localStorage.getItem("note_id")||"";
+
+    if(noteid.value){
+
+        load_local();
+
+        load_online();
+
+    }
+
+});
+
+/* ---------- Note Change ---------- */
+
+noteid.addEventListener("change",()=>{
+
+    load_local();
+
+    load_online();
+
+});
+
+/* ---------- Typing ---------- */
+
+textarea.addEventListener("input",()=>{
+
+    save_local();
+
+    setStatus("Saving...");
+
+    clearTimeout(timer);
+
+    timer=setTimeout(save_online,5000);
+
+});
+
+/* ---------- Clear ---------- */
+
+function generate_bold_clear(){
+
+    textarea.value="";
+
+    save_local();
+
+}
+</script>
+</body></html>

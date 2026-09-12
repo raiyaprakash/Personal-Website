@@ -2,9 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>URL Views Analytics</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Views Tracker</title>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -26,275 +30,508 @@
                     }
                 }
             }
-        }
+        };
     </script>
 </head>
 
-<body class="min-h-screen bg-[#09090b] text-zinc-100 font-sans">
+<body class="bg-zinc-950 text-zinc-100 min-h-screen">
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
 
     <!-- Header -->
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5 mb-8">
+    <header class="mb-6">
 
-        <div>
-            <div class="flex items-center gap-3">
-                <div class="w-11 h-11 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
-                    <i data-lucide="bar-chart-3"
-                       class="w-5 h-5 text-indigo-400"></i>
-                </div>
-
-                <div>
-                    <h1 class="text-2xl font-bold tracking-tight">
-                        URL Analytics
-                    </h1>
-
-                    <p class="text-sm text-zinc-500 mt-1">
-                        Website views dashboard
-                    </p>
-                </div>
-            </div>
-        </div>
-
-
-        <button
-            id="refreshBtn"
-            onclick="loadViews()"
-            class="inline-flex items-center justify-center gap-2
-                   px-4 py-2.5 rounded-xl
-                   bg-zinc-800 hover:bg-zinc-700
-                   border border-zinc-700
-                   text-sm font-medium
-                   transition">
-
-            <i data-lucide="refresh-cw"
-               id="refreshIcon"
-               class="w-4 h-4"></i>
-
-            Refresh
-        </button>
-
-    </div>
-
-
-    <!-- Stats -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-
-        <!-- URLs -->
-        <div class="rounded-2xl border border-zinc-800 bg-zinc-900/70 p-5">
-
-            <div class="flex items-center justify-between">
-
-                <div>
-                    <p class="text-sm text-zinc-500">
-                        Total URLs
-                    </p>
-
-                    <p
-                        id="totalUrls"
-                        class="text-3xl font-bold mt-2">
-                        0
-                    </p>
-                </div>
-
-                <div class="w-11 h-11 rounded-xl bg-blue-500/10
-                            flex items-center justify-center">
-
-                    <i data-lucide="link-2"
-                       class="w-5 h-5 text-blue-400"></i>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- Views -->
-        <div class="rounded-2xl border border-zinc-800 bg-zinc-900/70 p-5">
-
-            <div class="flex items-center justify-between">
-
-                <div>
-                    <p class="text-sm text-zinc-500">
-                        Total Views
-                    </p>
-
-                    <p
-                        id="totalViews"
-                        class="text-3xl font-bold mt-2">
-                        0
-                    </p>
-                </div>
-
-                <div class="w-11 h-11 rounded-xl bg-emerald-500/10
-                            flex items-center justify-center">
-
-                    <i data-lucide="eye"
-                       class="w-5 h-5 text-emerald-400"></i>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- Error -->
-    <div
-        id="error"
-        class="hidden mb-5 rounded-xl border border-red-500/20
-               bg-red-500/10 px-4 py-3 text-sm text-red-400">
-    </div>
-
-
-    <!-- Table -->
-    <div class="rounded-2xl border border-zinc-800
-                bg-zinc-900/70 overflow-hidden">
-
-        <!-- Table header -->
-        <div class="px-5 py-4 border-b border-zinc-800
-                    flex items-center justify-between">
+        <div class="flex items-center justify-between gap-4">
 
             <div>
-                <h2 class="font-semibold">
-                    URL Views
-                </h2>
+                <h1 class="text-xl sm:text-2xl font-bold tracking-tight">
+                    Views Tracker
+                </h1>
 
-                <p class="text-xs text-zinc-500 mt-1">
-                    Latest modified URLs appear first
+                <p class="text-sm text-zinc-500 mt-1">
+                    URL views analytics
                 </p>
             </div>
 
-            <div class="flex items-center gap-2 text-xs text-zinc-500">
+            <button
+                id="refreshBtn"
+                onclick="loadData()"
+                class="
+                    inline-flex items-center gap-2
+                    px-3 py-2
+                    rounded-lg
+                    bg-zinc-900
+                    border border-zinc-800
+                    hover:bg-zinc-800
+                    transition
+                    text-sm
+                "
+            >
+                <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                <span class="hidden sm:inline">
+                    Refresh
+                </span>
+            </button>
 
-                <span
-                    id="statusDot"
-                    class="w-2 h-2 rounded-full bg-emerald-500">
+        </div>
+
+    </header>
+
+
+    <!-- Filters -->
+    <section
+        class="
+            bg-zinc-900/70
+            border border-zinc-800
+            rounded-xl
+            p-4
+            mb-5
+        "
+    >
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+
+            <!-- Date -->
+            <div class="relative">
+
+                <i
+                    data-lucide="calendar-days"
+                    class="
+                        absolute
+                        left-3
+                        top-1/2
+                        -translate-y-1/2
+                        w-4
+                        h-4
+                        text-zinc-500
+                        pointer-events-none
+                    "
+                ></i>
+
+                <input
+                    type="date"
+                    id="date"
+                    class="
+                        w-full
+                        h-11
+                        pl-10
+                        pr-3
+                        rounded-lg
+                        bg-zinc-950
+                        border border-zinc-800
+                        text-sm
+                        text-zinc-200
+                        outline-none
+                        focus:border-zinc-600
+                    "
+                >
+
+            </div>
+
+
+            <!-- URL Search -->
+            <div class="relative md:col-span-2">
+
+                <i
+                    data-lucide="search"
+                    class="
+                        absolute
+                        left-3
+                        top-1/2
+                        -translate-y-1/2
+                        w-4
+                        h-4
+                        text-zinc-500
+                        pointer-events-none
+                    "
+                ></i>
+
+                <input
+                    type="text"
+                    id="urlSearch"
+                    placeholder="Search URL..."
+                    class="
+                        w-full
+                        h-11
+                        pl-10
+                        pr-3
+                        rounded-lg
+                        bg-zinc-950
+                        border border-zinc-800
+                        text-sm
+                        text-zinc-200
+                        placeholder:text-zinc-600
+                        outline-none
+                        focus:border-zinc-600
+                    "
+                >
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Stats -->
+    <section
+        class="
+            grid
+            grid-cols-2
+            lg:grid-cols-3
+            gap-3
+            mb-5
+        "
+    >
+
+        <!-- Views -->
+        <div
+            class="
+                bg-zinc-900/70
+                border border-zinc-800
+                rounded-xl
+                p-4
+            "
+        >
+
+            <div class="flex items-center gap-2 mb-3">
+
+                <div
+                    class="
+                        w-8 h-8
+                        rounded-lg
+                        bg-zinc-800
+                        flex
+                        items-center
+                        justify-center
+                    "
+                >
+                    <i
+                        data-lucide="eye"
+                        class="w-4 h-4 text-zinc-300"
+                    ></i>
+                </div>
+
+                <span class="text-xs text-zinc-500">
+                    Total Views
                 </span>
 
-                Live
+            </div>
+
+            <div
+                id="totalViews"
+                class="text-2xl font-bold"
+            >
+                0
             </div>
 
         </div>
 
 
-        <!-- Responsive table -->
-        <div class="overflow-x-auto">
+        <!-- URLs -->
+        <div
+            class="
+                bg-zinc-900/70
+                border border-zinc-800
+                rounded-xl
+                p-4
+            "
+        >
 
-            <table class="w-full min-w-[700px]">
+            <div class="flex items-center gap-2 mb-3">
+
+                <div
+                    class="
+                        w-8 h-8
+                        rounded-lg
+                        bg-zinc-800
+                        flex
+                        items-center
+                        justify-center
+                    "
+                >
+                    <i
+                        data-lucide="link"
+                        class="w-4 h-4 text-zinc-300"
+                    ></i>
+                </div>
+
+                <span class="text-xs text-zinc-500">
+                    URLs
+                </span>
+
+            </div>
+
+            <div
+                id="totalUrls"
+                class="text-2xl font-bold"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <!-- Records -->
+        <div
+            class="
+                col-span-2
+                lg:col-span-1
+                bg-zinc-900/70
+                border border-zinc-800
+                rounded-xl
+                p-4
+            "
+        >
+
+            <div class="flex items-center gap-2 mb-3">
+
+                <div
+                    class="
+                        w-8 h-8
+                        rounded-lg
+                        bg-zinc-800
+                        flex
+                        items-center
+                        justify-center
+                    "
+                >
+                    <i
+                        data-lucide="database"
+                        class="w-4 h-4 text-zinc-300"
+                    ></i>
+                </div>
+
+                <span class="text-xs text-zinc-500">
+                    Records
+                </span>
+
+            </div>
+
+            <div
+                id="totalRecords"
+                class="text-2xl font-bold"
+            >
+                0
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Table -->
+    <section
+        class="
+            bg-zinc-900/70
+            border border-zinc-800
+            rounded-xl
+            overflow-hidden
+        "
+    >
+
+        <!-- Table header -->
+        <div
+            class="
+                px-4 py-3
+                border-b border-zinc-800
+                flex
+                items-center
+                justify-between
+            "
+        >
+
+            <div class="flex items-center gap-2">
+
+                <i
+                    data-lucide="bar-chart-3"
+                    class="w-4 h-4 text-zinc-400"
+                ></i>
+
+                <span class="text-sm font-medium">
+                    View Statistics
+                </span>
+
+            </div>
+
+            <span
+                id="selectedDate"
+                class="text-xs text-zinc-500"
+            >
+                All dates
+            </span>
+
+        </div>
+
+
+        <!-- Status -->
+        <div
+            id="status"
+            class="py-12 text-center text-sm text-zinc-500"
+        >
+            Loading...
+        </div>
+
+
+        <!-- Table -->
+        <div
+            id="tableWrapper"
+            class="overflow-x-auto hidden"
+        >
+
+            <table class="w-full text-sm">
 
                 <thead>
-                    <tr class="border-b border-zinc-800 text-left">
 
-                        <th class="px-5 py-3 text-xs font-medium
-                                   text-zinc-500 uppercase tracking-wider">
+                    <tr
+                        class="
+                            border-b
+                            border-zinc-800
+                            text-zinc-500
+                            text-xs
+                        "
+                    >
+
+                        <th class="text-left px-4 py-3 font-medium">
                             #
                         </th>
 
-                        <th class="px-5 py-3 text-xs font-medium
-                                   text-zinc-500 uppercase tracking-wider">
+                        <th class="text-left px-4 py-3 font-medium">
+                            Date
+                        </th>
+
+                        <th class="text-left px-4 py-3 font-medium">
                             URL
                         </th>
 
-                        <th class="px-5 py-3 text-xs font-medium
-                                   text-zinc-500 uppercase tracking-wider">
+                        <th class="text-right px-4 py-3 font-medium">
                             Views
                         </th>
 
-                        <th class="px-5 py-3 text-xs font-medium
-                                   text-zinc-500 uppercase tracking-wider">
+                        <th class="text-left px-4 py-3 font-medium whitespace-nowrap">
                             Last Modified
                         </th>
 
                     </tr>
+
                 </thead>
 
                 <tbody
                     id="tableBody"
-                    class="divide-y divide-zinc-800">
-                </tbody>
+                    class="divide-y divide-zinc-800/70"
+                ></tbody>
 
             </table>
 
         </div>
 
-    </div>
-
-
-    <!-- Footer -->
-    <div class="mt-5 flex items-center justify-between text-xs text-zinc-600">
-
-        <span>
-            URL View Tracker
-        </span>
-
-        <span id="lastUpdated">
-            -
-        </span>
-
-    </div>
+    </section>
 
 </div>
 
 
 <script>
 
-/* ============================================
-   CONFIG
-============================================ */
- const params = new URLSearchParams(window.location.search);
+/*
+|--------------------------------------------------------------------------
+| API
+|--------------------------------------------------------------------------
+*/
 
 const API_URL =
-    "https://track.mohit-raiya.workers.dev/views";
-
-const PASSWORD = params.get('pass') || "1234";
-
-/* ============================================
-   LOAD DATA
-============================================ */
-
-async function loadViews() {
-
-    const refreshBtn =
-        document.getElementById("refreshBtn");
-
-    const refreshIcon =
-        document.getElementById("refreshIcon");
-
-    const tableBody =
-        document.getElementById("tableBody");
-
-    const errorBox =
-        document.getElementById("error");
-
-    const statusDot =
-        document.getElementById("statusDot");
+    "https://track.mohit-raiya.workers.dev";
 
 
-    refreshBtn.disabled = true;
+/*
+|--------------------------------------------------------------------------
+| Get password from permalink
+|--------------------------------------------------------------------------
+|
+| https://prakashraiya.pages.dev/track?pass=pkview
+|
+*/
 
-    refreshIcon.classList.add("animate-spin");
+const params =
+    new URLSearchParams(window.location.search);
 
-    errorBox.classList.add("hidden");
+const PASSWORD =
+    params.get("pass");
 
-    statusDot.className =
-        "w-2 h-2 rounded-full bg-yellow-400";
+
+/*
+|--------------------------------------------------------------------------
+| Data cache
+|--------------------------------------------------------------------------
+*/
+
+let allData = [];
+
+
+/*
+|--------------------------------------------------------------------------
+| DOM
+|--------------------------------------------------------------------------
+*/
+
+const dateInput =
+    document.getElementById("date");
+
+const searchInput =
+    document.getElementById("urlSearch");
+
+const statusBox =
+    document.getElementById("status");
+
+const tableWrapper =
+    document.getElementById("tableWrapper");
+
+const tableBody =
+    document.getElementById("tableBody");
+
+const refreshBtn =
+    document.getElementById("refreshBtn");
+
+
+/*
+|--------------------------------------------------------------------------
+| Load API data
+|--------------------------------------------------------------------------
+*/
+
+async function loadData() {
+
+    if (!PASSWORD) {
+
+        showError(
+            "Password is missing from the URL."
+        );
+
+        return;
+    }
+
+
+    setLoading(true);
 
 
     try {
 
-        const response = await fetch(
+        /*
+         * We fetch all data once.
+         *
+         * Date and URL filtering is done locally.
+         */
+
+        const apiUrl =
             API_URL +
-            "?password=" +
-            encodeURIComponent(PASSWORD),
-            {
+            "/views?password=" +
+            encodeURIComponent(PASSWORD);
+
+
+        const response =
+            await fetch(apiUrl, {
                 method: "GET",
                 cache: "no-store"
-            }
-        );
+            });
 
 
         const result =
@@ -305,250 +542,430 @@ async function loadViews() {
 
             throw new Error(
                 result.error ||
-                "Unable to load analytics"
+                "Unable to load data."
             );
 
         }
 
 
-        let data =
+        allData =
             Array.isArray(result.data)
                 ? result.data
                 : [];
 
 
-        /* Latest modified first */
-        data.sort(function(a, b) {
-
-            return Number(b.last_modified || 0) -
-                   Number(a.last_modified || 0);
-
-        });
-
-
-        /* ============================================
-           STATS
-        ============================================ */
-
-        document.getElementById("totalUrls")
-            .textContent =
-            data.length.toLocaleString();
-
-
-        const totalViews =
-            data.reduce(function(total, item) {
-
-                return total +
-                    Number(item.views || 0);
-
-            }, 0);
-
-
-        document.getElementById("totalViews")
-            .textContent =
-            totalViews.toLocaleString();
-
-
-        /* ============================================
-           TABLE
-        ============================================ */
-
-        tableBody.innerHTML = "";
-
-
-        if (!data.length) {
-
-            tableBody.innerHTML = `
-                <tr>
-                    <td colspan="4"
-                        class="px-5 py-12 text-center">
-
-                        <div class="flex flex-col
-                                    items-center
-                                    text-zinc-500">
-
-                            <i data-lucide="database"
-                               class="w-8 h-8 mb-3">
-                            </i>
-
-                            <p class="text-sm">
-                                No URL data found
-                            </p>
-
-                        </div>
-
-                    </td>
-                </tr>
-            `;
-
-            lucide.createIcons();
-
-            return;
-        }
-
-
-        data.forEach(function(item, index) {
-
-            const tr =
-                document.createElement("tr");
-
-
-            tr.className =
-                "hover:bg-zinc-800/40 transition";
-
-
-            const date =
-                item.last_modified
-                    ? new Date(
-                        Number(item.last_modified)
-                    ).toLocaleString()
-                    : "-";
-
-
-            tr.innerHTML = `
-
-                <td class="px-5 py-4 text-sm text-zinc-500">
-                    ${index + 1}
-                </td>
-
-
-                <td class="px-5 py-4">
-
-                    <div class="flex items-start gap-3">
-
-                        <div class="mt-0.5 w-8 h-8 shrink-0
-                                    rounded-lg
-                                    bg-indigo-500/10
-                                    flex items-center justify-center">
-
-                            <i data-lucide="globe"
-                               class="w-4 h-4 text-indigo-400">
-                            </i>
-
-                        </div>
-
-                        <a
-                            href="${escapeHtml(item.url)}"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="text-sm text-zinc-300
-                                   hover:text-indigo-400
-                                   transition break-all">
-
-                            ${escapeHtml(item.url)}
-
-                        </a>
-
-                    </div>
-
-                </td>
-
-
-                <td class="px-5 py-4">
-
-                    <div class="inline-flex items-center gap-2
-                                px-2.5 py-1 rounded-lg
-                                bg-emerald-500/10
-                                text-emerald-400
-                                text-sm font-semibold">
-
-                        <i data-lucide="eye"
-                           class="w-3.5 h-3.5">
-                        </i>
-
-                        ${Number(
-                            item.views || 0
-                        ).toLocaleString()}
-
-                    </div>
-
-                </td>
-
-
-                <td class="px-5 py-4 text-sm text-zinc-500">
-
-                    <div class="flex items-center gap-2">
-
-                        <i data-lucide="clock-3"
-                           class="w-4 h-4">
-                        </i>
-
-                        ${escapeHtml(date)}
-
-                    </div>
-
-                </td>
-
-            `;
-
-
-            tableBody.appendChild(tr);
-
-        });
-
-
-        /* Icons */
-        lucide.createIcons();
-
-
-        /* Status */
-        statusDot.className =
-            "w-2 h-2 rounded-full bg-emerald-500";
-
-
-        document.getElementById("lastUpdated")
-            .textContent =
-            "Updated " +
-            new Date().toLocaleTimeString();
+        renderData();
 
 
     } catch (error) {
 
         console.error(error);
 
-
-        errorBox.textContent =
+        showError(
             error.message ||
-            "Failed to load data";
-
-
-        errorBox.classList.remove("hidden");
-
-
-        statusDot.className =
-            "w-2 h-2 rounded-full bg-red-500";
-
-
-        tableBody.innerHTML = `
-            <tr>
-                <td colspan="4"
-                    class="px-5 py-12 text-center
-                           text-sm text-zinc-500">
-
-                    Failed to load data
-
-                </td>
-            </tr>
-        `;
+            "Unable to connect to API."
+        );
 
     } finally {
 
-        refreshBtn.disabled = false;
-
-        refreshIcon.classList.remove("animate-spin");
+        setLoading(false);
 
     }
 
 }
 
 
-/* ============================================
-   HTML ESCAPE
-============================================ */
+/*
+|--------------------------------------------------------------------------
+| Render / filter data
+|--------------------------------------------------------------------------
+*/
+
+function renderData() {
+
+    const selectedDate =
+        dateInput.value;
+
+    const search =
+        searchInput.value
+            .trim()
+            .toLowerCase();
+
+
+    let data =
+        [...allData];
+
+
+    /*
+     * Date filter
+     */
+
+    if (selectedDate) {
+
+        data =
+            data.filter(item =>
+                String(item.view_date || "") ===
+                selectedDate
+            );
+
+    }
+
+
+    /*
+     * URL filter
+     */
+
+    if (search) {
+
+        data =
+            data.filter(item =>
+                String(item.url || "")
+                    .toLowerCase()
+                    .includes(search)
+            );
+
+    }
+
+
+    /*
+     * Sort
+     */
+
+    data.sort((a, b) => {
+
+        const viewsA =
+            Number(a.views || 0);
+
+        const viewsB =
+            Number(b.views || 0);
+
+        return viewsB - viewsA;
+
+    });
+
+
+    /*
+     * Stats
+     */
+
+    let totalViews = 0;
+
+    const urls =
+        new Set();
+
+
+    data.forEach(item => {
+
+        totalViews +=
+            Number(item.views || 0);
+
+        urls.add(item.url);
+
+    });
+
+
+    document.getElementById("totalViews")
+        .textContent =
+        totalViews.toLocaleString("en-IN");
+
+
+    document.getElementById("totalUrls")
+        .textContent =
+        urls.size.toLocaleString("en-IN");
+
+
+    document.getElementById("totalRecords")
+        .textContent =
+        data.length.toLocaleString("en-IN");
+
+
+    /*
+     * Selected date label
+     */
+
+    document.getElementById("selectedDate")
+        .textContent =
+        selectedDate
+            ? formatDateOnly(selectedDate)
+            : "All dates";
+
+
+    /*
+     * Empty
+     */
+
+    if (!data.length) {
+
+        tableWrapper.classList.add("hidden");
+
+        statusBox.className =
+            "py-12 text-center text-sm text-zinc-500";
+
+        statusBox.textContent =
+            "No data found.";
+
+        statusBox.classList.remove("hidden");
+
+        return;
+    }
+
+
+    /*
+     * Table
+     */
+
+    tableBody.innerHTML =
+        data.map((item, index) => {
+
+            return `
+
+                <tr class="
+                    hover:bg-zinc-800/30
+                    transition
+                ">
+
+                    <td class="
+                        px-4 py-3
+                        text-zinc-600
+                        whitespace-nowrap
+                    ">
+                        ${index + 1}
+                    </td>
+
+
+                    <td class="
+                        px-4 py-3
+                        text-zinc-400
+                        whitespace-nowrap
+                    ">
+                        ${escapeHtml(
+                            item.view_date || "-"
+                        )}
+                    </td>
+
+
+                    <td class="
+                        px-4 py-3
+                        max-w-[450px]
+                    ">
+
+                        <a
+                            href="${escapeAttribute(item.url || "#")}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="
+                                text-zinc-300
+                                hover:text-white
+                                hover:underline
+                                break-all
+                            "
+                        >
+                            ${escapeHtml(
+                                item.url || "-"
+                            )}
+                        </a>
+
+                    </td>
+
+
+                    <td class="
+                        px-4 py-3
+                        text-right
+                        font-semibold
+                        text-white
+                        whitespace-nowrap
+                    ">
+                        ${Number(
+                            item.views || 0
+                        ).toLocaleString("en-IN")}
+                    </td>
+
+
+                    <td class="
+                        px-4 py-3
+                        text-zinc-500
+                        whitespace-nowrap
+                    ">
+                        ${formatTimestamp(
+                            item.last_modified
+                        )}
+                    </td>
+
+                </tr>
+
+            `;
+
+        }).join("");
+
+
+    statusBox.classList.add("hidden");
+
+    tableWrapper.classList.remove("hidden");
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Loading state
+|--------------------------------------------------------------------------
+*/
+
+function setLoading(loading) {
+
+    if (loading) {
+
+        refreshBtn.disabled = true;
+
+        refreshBtn.classList.add(
+            "opacity-50",
+            "cursor-not-allowed"
+        );
+
+        statusBox.className =
+            "py-12 text-center text-sm text-zinc-500";
+
+        statusBox.innerHTML = `
+            <div class="flex items-center justify-center gap-2">
+                <i
+                    data-lucide="loader-circle"
+                    class="w-4 h-4 animate-spin"
+                ></i>
+                Loading...
+            </div>
+        `;
+
+        statusBox.classList.remove("hidden");
+
+        tableWrapper.classList.add("hidden");
+
+        lucide.createIcons();
+
+    } else {
+
+        refreshBtn.disabled = false;
+
+        refreshBtn.classList.remove(
+            "opacity-50",
+            "cursor-not-allowed"
+        );
+
+    }
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Error
+|--------------------------------------------------------------------------
+*/
+
+function showError(message) {
+
+    statusBox.className =
+        "py-12 px-4 text-center text-sm text-red-400";
+
+    statusBox.innerHTML = `
+
+        <div class="flex flex-col items-center gap-3">
+
+            <div
+                class="
+                    w-10 h-10
+                    rounded-full
+                    bg-red-500/10
+                    flex
+                    items-center
+                    justify-center
+                "
+            >
+                <i
+                    data-lucide="circle-alert"
+                    class="w-5 h-5"
+                ></i>
+            </div>
+
+            <div>
+                ${escapeHtml(message)}
+            </div>
+
+        </div>
+
+    `;
+
+    statusBox.classList.remove("hidden");
+
+    tableWrapper.classList.add("hidden");
+
+    lucide.createIcons();
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Date formatting
+|--------------------------------------------------------------------------
+*/
+
+function formatDateOnly(date) {
+
+    if (!date) {
+        return "-";
+    }
+
+    const parts =
+        date.split("-");
+
+    if (parts.length !== 3) {
+        return date;
+    }
+
+    return `${parts[2]}-${parts[1]}-${parts[0]}`;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Timestamp formatting
+|--------------------------------------------------------------------------
+*/
+
+function formatTimestamp(timestamp) {
+
+    if (!timestamp) {
+        return "-";
+    }
+
+    const date =
+        new Date(Number(timestamp));
+
+    if (isNaN(date.getTime())) {
+        return "-";
+    }
+
+    return date.toLocaleString(
+        "en-IN",
+        {
+            dateStyle: "medium",
+            timeStyle: "short"
+        }
+    );
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| HTML escape
+|--------------------------------------------------------------------------
+*/
 
 function escapeHtml(value) {
 
-    return String(value ?? "")
+    return String(value)
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
@@ -558,13 +975,48 @@ function escapeHtml(value) {
 }
 
 
-/* ============================================
-   INITIAL LOAD
-============================================ */
+/*
+|--------------------------------------------------------------------------
+| Attribute escape
+|--------------------------------------------------------------------------
+*/
+
+function escapeAttribute(value) {
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/"/g, "&quot;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Filters
+|--------------------------------------------------------------------------
+*/
+
+dateInput.addEventListener(
+    "change",
+    renderData
+);
+
+searchInput.addEventListener(
+    "input",
+    renderData
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| Initial load
+|--------------------------------------------------------------------------
+*/
 
 lucide.createIcons();
 
-loadViews();
+loadData();
 
 </script>
 

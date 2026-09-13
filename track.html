@@ -32,6 +32,44 @@
             }
         };
     </script>
+
+    <style>
+        /* Better mobile table */
+        .url-cell {
+            min-width: 0;
+            max-width: 520px;
+        }
+
+        .url-link {
+            display: block;
+            width: 100%;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+        }
+
+        @media (max-width: 640px) {
+
+            .url-cell {
+                max-width: 260px;
+            }
+
+            .url-link {
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 3;
+                overflow: hidden;
+                line-height: 1.45;
+            }
+
+            .hide-mobile {
+                display: none;
+            }
+
+            table {
+                table-layout: fixed;
+            }
+        }
+    </style>
 </head>
 
 <body class="bg-zinc-950 text-zinc-100 min-h-screen">
@@ -57,17 +95,25 @@
                 id="refreshBtn"
                 onclick="loadData()"
                 class="
-                    inline-flex items-center gap-2
-                    px-3 py-2
+                    inline-flex
+                    items-center
+                    gap-2
+                    px-3
+                    py-2
                     rounded-lg
                     bg-zinc-900
-                    border border-zinc-800
+                    border
+                    border-zinc-800
                     hover:bg-zinc-800
                     transition
                     text-sm
                 "
             >
-                <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                <i
+                    data-lucide="refresh-cw"
+                    class="w-4 h-4"
+                ></i>
+
                 <span class="hidden sm:inline">
                     Refresh
                 </span>
@@ -82,7 +128,8 @@
     <section
         class="
             bg-zinc-900/70
-            border border-zinc-800
+            border
+            border-zinc-800
             rounded-xl
             p-4
             mb-5
@@ -118,7 +165,8 @@
                         pr-3
                         rounded-lg
                         bg-zinc-950
-                        border border-zinc-800
+                        border
+                        border-zinc-800
                         text-sm
                         text-zinc-200
                         outline-none
@@ -157,7 +205,8 @@
                         pr-3
                         rounded-lg
                         bg-zinc-950
-                        border border-zinc-800
+                        border
+                        border-zinc-800
                         text-sm
                         text-zinc-200
                         placeholder:text-zinc-600
@@ -188,7 +237,8 @@
         <div
             class="
                 bg-zinc-900/70
-                border border-zinc-800
+                border
+                border-zinc-800
                 rounded-xl
                 p-4
             "
@@ -198,7 +248,8 @@
 
                 <div
                     class="
-                        w-8 h-8
+                        w-8
+                        h-8
                         rounded-lg
                         bg-zinc-800
                         flex
@@ -232,7 +283,8 @@
         <div
             class="
                 bg-zinc-900/70
-                border border-zinc-800
+                border
+                border-zinc-800
                 rounded-xl
                 p-4
             "
@@ -242,7 +294,8 @@
 
                 <div
                     class="
-                        w-8 h-8
+                        w-8
+                        h-8
                         rounded-lg
                         bg-zinc-800
                         flex
@@ -278,7 +331,8 @@
                 col-span-2
                 lg:col-span-1
                 bg-zinc-900/70
-                border border-zinc-800
+                border
+                border-zinc-800
                 rounded-xl
                 p-4
             "
@@ -288,7 +342,8 @@
 
                 <div
                     class="
-                        w-8 h-8
+                        w-8
+                        h-8
                         rounded-lg
                         bg-zinc-800
                         flex
@@ -324,7 +379,8 @@
     <section
         class="
             bg-zinc-900/70
-            border border-zinc-800
+            border
+            border-zinc-800
             rounded-xl
             overflow-hidden
         "
@@ -333,11 +389,14 @@
         <!-- Table header -->
         <div
             class="
-                px-4 py-3
-                border-b border-zinc-800
+                px-4
+                py-3
+                border-b
+                border-zinc-800
                 flex
                 items-center
                 justify-between
+                gap-3
             "
         >
 
@@ -356,7 +415,7 @@
 
             <span
                 id="selectedDate"
-                class="text-xs text-zinc-500"
+                class="text-xs text-zinc-500 whitespace-nowrap"
             >
                 All dates
             </span>
@@ -367,19 +426,31 @@
         <!-- Status -->
         <div
             id="status"
-            class="py-12 text-center text-sm text-zinc-500"
+            class="
+                py-12
+                px-4
+                text-center
+                text-sm
+                text-zinc-500
+            "
         >
             Loading...
         </div>
 
 
-        <!-- Table -->
+        <!-- Responsive Table -->
         <div
             id="tableWrapper"
-            class="overflow-x-auto hidden"
+            class="hidden overflow-x-auto"
         >
 
-            <table class="w-full text-sm">
+            <table
+                class="
+                    w-full
+                    text-sm
+                    table-fixed
+                "
+            >
 
                 <thead>
 
@@ -392,29 +463,78 @@
                         "
                     >
 
-                        <th class="text-left px-4 py-3 font-medium">
+                        <th
+                            class="
+                                text-left
+                                px-3
+                                sm:px-4
+                                py-3
+                                font-medium
+                                w-10
+                                sm:w-12
+                            "
+                        >
                             #
                         </th>
 
-                        <th class="text-left px-4 py-3 font-medium">
+                        <th
+                            class="
+                                text-left
+                                px-3
+                                sm:px-4
+                                py-3
+                                font-medium
+                                w-28
+                                sm:w-32
+                            "
+                        >
                             Date
                         </th>
 
-                        <th class="text-left px-4 py-3 font-medium">
+                        <th
+                            class="
+                                text-left
+                                px-3
+                                sm:px-4
+                                py-3
+                                font-medium
+                            "
+                        >
                             URL
                         </th>
 
-                        <th class="text-right px-4 py-3 font-medium">
+                        <th
+                            class="
+                                text-right
+                                px-3
+                                sm:px-4
+                                py-3
+                                font-medium
+                                w-20
+                                sm:w-24
+                            "
+                        >
                             Views
                         </th>
 
-                        <th class="text-left px-4 py-3 font-medium whitespace-nowrap">
+                        <th
+                            class="
+                                hide-mobile
+                                text-left
+                                px-4
+                                py-3
+                                font-medium
+                                whitespace-nowrap
+                                w-40
+                            "
+                        >
                             Last Modified
                         </th>
 
                     </tr>
 
                 </thead>
+
 
                 <tbody
                     id="tableBody"
@@ -444,9 +564,10 @@ const API_URL =
 
 /*
 |--------------------------------------------------------------------------
-| Get password from permalink
+| Password from permalink
 |--------------------------------------------------------------------------
 |
+| Example:
 | https://prakashraiya.pages.dev/track?pass=pkview
 |
 */
@@ -494,6 +615,44 @@ const refreshBtn =
 
 /*
 |--------------------------------------------------------------------------
+| Today's date
+|--------------------------------------------------------------------------
+|
+| Important:
+| Use local date instead of UTC date.
+|--------------------------------------------------------------------------
+*/
+
+function getTodayLocal() {
+
+    const now = new Date();
+
+    const year =
+        now.getFullYear();
+
+    const month =
+        String(now.getMonth() + 1)
+            .padStart(2, "0");
+
+    const day =
+        String(now.getDate())
+            .padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Set today's date by default
+|--------------------------------------------------------------------------
+*/
+
+dateInput.value = getTodayLocal();
+
+
+/*
+|--------------------------------------------------------------------------
 | Load API data
 |--------------------------------------------------------------------------
 */
@@ -514,12 +673,6 @@ async function loadData() {
 
 
     try {
-
-        /*
-         * We fetch all data once.
-         *
-         * Date and URL filtering is done locally.
-         */
 
         const apiUrl =
             API_URL +
@@ -566,6 +719,7 @@ async function loadData() {
             "Unable to connect to API."
         );
 
+
     } finally {
 
         setLoading(false);
@@ -586,6 +740,7 @@ function renderData() {
     const selectedDate =
         dateInput.value;
 
+
     const search =
         searchInput.value
             .trim()
@@ -597,8 +752,10 @@ function renderData() {
 
 
     /*
-     * Date filter
-     */
+    |--------------------------------------------------------------------------
+    | Date filter
+    |--------------------------------------------------------------------------
+    */
 
     if (selectedDate) {
 
@@ -612,8 +769,10 @@ function renderData() {
 
 
     /*
-     * URL filter
-     */
+    |--------------------------------------------------------------------------
+    | URL filter
+    |--------------------------------------------------------------------------
+    */
 
     if (search) {
 
@@ -628,8 +787,10 @@ function renderData() {
 
 
     /*
-     * Sort
-     */
+    |--------------------------------------------------------------------------
+    | Sort by views
+    |--------------------------------------------------------------------------
+    */
 
     data.sort((a, b) => {
 
@@ -645,8 +806,10 @@ function renderData() {
 
 
     /*
-     * Stats
-     */
+    |--------------------------------------------------------------------------
+    | Stats
+    |--------------------------------------------------------------------------
+    */
 
     let totalViews = 0;
 
@@ -680,8 +843,10 @@ function renderData() {
 
 
     /*
-     * Selected date label
-     */
+    |--------------------------------------------------------------------------
+    | Selected date label
+    |--------------------------------------------------------------------------
+    */
 
     document.getElementById("selectedDate")
         .textContent =
@@ -691,15 +856,17 @@ function renderData() {
 
 
     /*
-     * Empty
-     */
+    |--------------------------------------------------------------------------
+    | Empty
+    |--------------------------------------------------------------------------
+    */
 
     if (!data.length) {
 
         tableWrapper.classList.add("hidden");
 
         statusBox.className =
-            "py-12 text-center text-sm text-zinc-500";
+            "py-12 px-4 text-center text-sm text-zinc-500";
 
         statusBox.textContent =
             "No data found.";
@@ -707,85 +874,124 @@ function renderData() {
         statusBox.classList.remove("hidden");
 
         return;
+
     }
 
 
     /*
-     * Table
-     */
+    |--------------------------------------------------------------------------
+    | Table
+    |--------------------------------------------------------------------------
+    */
 
     tableBody.innerHTML =
         data.map((item, index) => {
 
+            const url =
+                String(item.url || "-");
+
+
             return `
 
-                <tr class="
-                    hover:bg-zinc-800/30
-                    transition
-                ">
+                <tr
+                    class="
+                        hover:bg-zinc-800/30
+                        transition
+                    "
+                >
 
-                    <td class="
-                        px-4 py-3
-                        text-zinc-600
-                        whitespace-nowrap
-                    ">
+                    <!-- Number -->
+                    <td
+                        class="
+                            px-3
+                            sm:px-4
+                            py-3
+                            text-zinc-600
+                            align-top
+                        "
+                    >
                         ${index + 1}
                     </td>
 
 
-                    <td class="
-                        px-4 py-3
-                        text-zinc-400
-                        whitespace-nowrap
-                    ">
+                    <!-- Date -->
+                    <td
+                        class="
+                            px-3
+                            sm:px-4
+                            py-3
+                            text-zinc-400
+                            whitespace-nowrap
+                            align-top
+                        "
+                    >
                         ${escapeHtml(
                             item.view_date || "-"
                         )}
                     </td>
 
 
-                    <td class="
-                        px-4 py-3
-                        max-w-[450px]
-                    ">
+                    <!-- URL -->
+                    <td
+                        class="
+                            px-3
+                            sm:px-4
+                            py-3
+                            align-top
+                            url-cell
+                        "
+                    >
 
                         <a
-                            href="${escapeAttribute(item.url || "#")}"
+                            href="${escapeAttribute(
+                                item.url || "#"
+                            )}"
                             target="_blank"
                             rel="noopener noreferrer"
+                            title="${escapeAttribute(url)}"
                             class="
+                                url-link
                                 text-zinc-300
                                 hover:text-white
                                 hover:underline
-                                break-all
                             "
                         >
-                            ${escapeHtml(
-                                item.url || "-"
-                            )}
+                            ${escapeHtml(url)}
                         </a>
 
                     </td>
 
 
-                    <td class="
-                        px-4 py-3
-                        text-right
-                        font-semibold
-                        text-white
-                        whitespace-nowrap
-                    ">
+                    <!-- Views -->
+                    <td
+                        class="
+                            px-3
+                            sm:px-4
+                            py-3
+                            text-right
+                            font-semibold
+                            text-white
+                            whitespace-nowrap
+                            align-top
+                        "
+                    >
                         ${Number(
                             item.views || 0
                         ).toLocaleString("en-IN")}
                     </td>
 
 
-                    <td class="
-                        px-4 py-3
-                        text-zinc-500
-                        whitespace-nowrap
-                    ">
+                    <!-- Last Modified -->
+                    <td
+                        class="
+                            hide-mobile
+                            px-4
+                            py-3
+                            text-zinc-500
+                            whitespace-nowrap
+                            align-top
+                        "
+                    >
                         ${formatTimestamp(
                             item.last_modified
                         )}
@@ -822,24 +1028,40 @@ function setLoading(loading) {
             "cursor-not-allowed"
         );
 
+
         statusBox.className =
             "py-12 text-center text-sm text-zinc-500";
 
+
         statusBox.innerHTML = `
-            <div class="flex items-center justify-center gap-2">
+
+            <div
+                class="
+                    flex
+                    items-center
+                    justify-center
+                    gap-2
+                "
+            >
+
                 <i
                     data-lucide="loader-circle"
                     class="w-4 h-4 animate-spin"
                 ></i>
+
                 Loading...
+
             </div>
+
         `;
+
 
         statusBox.classList.remove("hidden");
 
         tableWrapper.classList.add("hidden");
 
         lucide.createIcons();
+
 
     } else {
 
@@ -866,13 +1088,22 @@ function showError(message) {
     statusBox.className =
         "py-12 px-4 text-center text-sm text-red-400";
 
+
     statusBox.innerHTML = `
 
-        <div class="flex flex-col items-center gap-3">
+        <div
+            class="
+                flex
+                flex-col
+                items-center
+                gap-3
+            "
+        >
 
             <div
                 class="
-                    w-10 h-10
+                    w-10
+                    h-10
                     rounded-full
                     bg-red-500/10
                     flex
@@ -880,11 +1111,14 @@ function showError(message) {
                     justify-center
                 "
             >
+
                 <i
                     data-lucide="circle-alert"
                     class="w-5 h-5"
                 ></i>
+
             </div>
+
 
             <div>
                 ${escapeHtml(message)}
@@ -893,6 +1127,7 @@ function showError(message) {
         </div>
 
     `;
+
 
     statusBox.classList.remove("hidden");
 
@@ -915,12 +1150,15 @@ function formatDateOnly(date) {
         return "-";
     }
 
+
     const parts =
         date.split("-");
+
 
     if (parts.length !== 3) {
         return date;
     }
+
 
     return `${parts[2]}-${parts[1]}-${parts[0]}`;
 
@@ -939,12 +1177,15 @@ function formatTimestamp(timestamp) {
         return "-";
     }
 
+
     const date =
         new Date(Number(timestamp));
+
 
     if (isNaN(date.getTime())) {
         return "-";
     }
+
 
     return date.toLocaleString(
         "en-IN",
@@ -988,6 +1229,7 @@ function escapeAttribute(value) {
         .replace(/"/g, "&quot;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;");
+
 }
 
 
@@ -1001,6 +1243,7 @@ dateInput.addEventListener(
     "change",
     renderData
 );
+
 
 searchInput.addEventListener(
     "input",

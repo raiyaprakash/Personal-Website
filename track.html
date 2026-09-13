@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -12,309 +10,67 @@
 
     <title>Views Tracker</title>
 
-
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-
 
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-
     <script>
-
         tailwind.config = {
-
             theme: {
-
                 extend: {
-
                     fontFamily: {
-
                         sans: [
                             "Inter",
                             "ui-sans-serif",
                             "system-ui",
                             "sans-serif"
                         ]
-
                     }
-
                 }
-
             }
-
         };
-
     </script>
-
-
-    <style>
-
-        /* =========================================================
-           RESPONSIVE TABLE
-        ========================================================= */
-
-        .table-scroll {
-
-            width: 100%;
-
-            overflow-x: auto;
-
-            overflow-y: hidden;
-
-            -webkit-overflow-scrolling: touch;
-
-            scrollbar-width: thin;
-
-        }
-
-
-        /*
-         * Keep the table wide enough so columns never get squeezed.
-         * On mobile user can swipe horizontally.
-         */
-
-        .stats-table {
-
-            width: 100%;
-
-            min-width: 900px;
-
-            border-collapse: collapse;
-
-        }
-
-
-        .stats-table th,
-        .stats-table td {
-
-            white-space: nowrap;
-
-        }
-
-
-        /* =========================================================
-           COLUMN WIDTHS
-        ========================================================= */
-
-        .col-number {
-
-            width: 55px;
-
-        }
-
-
-        .col-date {
-
-            width: 130px;
-
-        }
-
-
-        .col-url {
-
-            width: 450px;
-
-            max-width: 450px;
-
-        }
-
-
-        .col-views {
-
-            width: 100px;
-
-        }
-
-
-        .col-modified {
-
-            width: 180px;
-
-        }
-
-
-        /* =========================================================
-           URL
-        ========================================================= */
-
-        .url-cell {
-
-            width: 450px;
-
-            max-width: 450px;
-
-        }
-
-
-        .url-link {
-
-            display: block;
-
-            width: 450px;
-
-            max-width: 450px;
-
-            overflow: hidden;
-
-            text-overflow: ellipsis;
-
-            white-space: nowrap;
-
-        }
-
-
-        /* =========================================================
-           MOBILE
-        ========================================================= */
-
-        @media (max-width: 768px) {
-
-            .stats-table {
-
-                min-width: 900px;
-
-            }
-
-
-            .url-cell {
-
-                width: 450px;
-
-                max-width: 450px;
-
-            }
-
-
-            .url-link {
-
-                width: 450px;
-
-                max-width: 450px;
-
-            }
-
-        }
-
-
-        /* =========================================================
-           SCROLLBAR
-        ========================================================= */
-
-        .table-scroll::-webkit-scrollbar {
-
-            height: 7px;
-
-        }
-
-
-        .table-scroll::-webkit-scrollbar-track {
-
-            background: #18181b;
-
-        }
-
-
-        .table-scroll::-webkit-scrollbar-thumb {
-
-            background: #3f3f46;
-
-            border-radius: 999px;
-
-        }
-
-
-        .table-scroll::-webkit-scrollbar-thumb:hover {
-
-            background: #52525b;
-
-        }
-
-    </style>
-
 </head>
-
 
 <body class="bg-zinc-950 text-zinc-100 min-h-screen">
 
-
 <div class="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
 
-
-    <!-- =========================================================
-         HEADER
-    ========================================================== -->
-
+    <!-- Header -->
     <header class="mb-6">
 
-        <div
-            class="
-                flex
-                items-center
-                justify-between
-                gap-4
-            "
-        >
+        <div class="flex items-center justify-between gap-4">
 
             <div>
-
-                <h1
-                    class="
-                        text-xl
-                        sm:text-2xl
-                        font-bold
-                        tracking-tight
-                    "
-                >
+                <h1 class="text-xl sm:text-2xl font-bold tracking-tight">
                     Views Tracker
                 </h1>
 
-
-                <p
-                    class="
-                        text-sm
-                        text-zinc-500
-                        mt-1
-                    "
-                >
+                <p class="text-sm text-zinc-500 mt-1">
                     URL views analytics
                 </p>
-
             </div>
-
-
-            <!-- Refresh -->
 
             <button
                 id="refreshBtn"
                 onclick="loadData()"
                 class="
-                    inline-flex
-                    items-center
-                    gap-2
-                    px-3
-                    py-2
+                    inline-flex items-center gap-2
+                    px-3 py-2
                     rounded-lg
                     bg-zinc-900
-                    border
-                    border-zinc-800
+                    border border-zinc-800
                     hover:bg-zinc-800
                     transition
                     text-sm
                 "
             >
-
-                <i
-                    data-lucide="refresh-cw"
-                    class="w-4 h-4"
-                ></i>
-
-
+                <i data-lucide="refresh-cw" class="w-4 h-4"></i>
                 <span class="hidden sm:inline">
                     Refresh
                 </span>
-
             </button>
 
         </div>
@@ -322,34 +78,20 @@
     </header>
 
 
-
-    <!-- =========================================================
-         FILTERS
-    ========================================================== -->
-
+    <!-- Filters -->
     <section
         class="
             bg-zinc-900/70
-            border
-            border-zinc-800
+            border border-zinc-800
             rounded-xl
             p-4
             mb-5
         "
     >
 
-        <div
-            class="
-                grid
-                grid-cols-1
-                md:grid-cols-3
-                gap-3
-            "
-        >
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
 
-
-            <!-- DATE -->
-
+            <!-- Date -->
             <div class="relative">
 
                 <i
@@ -366,7 +108,6 @@
                     "
                 ></i>
 
-
                 <input
                     type="date"
                     id="date"
@@ -377,8 +118,7 @@
                         pr-3
                         rounded-lg
                         bg-zinc-950
-                        border
-                        border-zinc-800
+                        border border-zinc-800
                         text-sm
                         text-zinc-200
                         outline-none
@@ -389,15 +129,8 @@
             </div>
 
 
-
-            <!-- URL SEARCH -->
-
-            <div
-                class="
-                    relative
-                    md:col-span-2
-                "
-            >
+            <!-- URL Search -->
+            <div class="relative md:col-span-2">
 
                 <i
                     data-lucide="search"
@@ -413,7 +146,6 @@
                     "
                 ></i>
 
-
                 <input
                     type="text"
                     id="urlSearch"
@@ -425,8 +157,7 @@
                         pr-3
                         rounded-lg
                         bg-zinc-950
-                        border
-                        border-zinc-800
+                        border border-zinc-800
                         text-sm
                         text-zinc-200
                         placeholder:text-zinc-600
@@ -442,11 +173,7 @@
     </section>
 
 
-
-    <!-- =========================================================
-         STATS
-    ========================================================== -->
-
+    <!-- Stats -->
     <section
         class="
             grid
@@ -457,32 +184,21 @@
         "
     >
 
-
-        <!-- TOTAL VIEWS -->
-
+        <!-- Views -->
         <div
             class="
                 bg-zinc-900/70
-                border
-                border-zinc-800
+                border border-zinc-800
                 rounded-xl
                 p-4
             "
         >
 
-            <div
-                class="
-                    flex
-                    items-center
-                    gap-2
-                    mb-3
-                "
-            >
+            <div class="flex items-center gap-2 mb-3">
 
                 <div
                     class="
-                        w-8
-                        h-8
+                        w-8 h-8
                         rounded-lg
                         bg-zinc-800
                         flex
@@ -490,33 +206,21 @@
                         justify-center
                     "
                 >
-
                     <i
                         data-lucide="eye"
                         class="w-4 h-4 text-zinc-300"
                     ></i>
-
                 </div>
 
-
-                <span
-                    class="
-                        text-xs
-                        text-zinc-500
-                    "
-                >
+                <span class="text-xs text-zinc-500">
                     Total Views
                 </span>
 
             </div>
 
-
             <div
                 id="totalViews"
-                class="
-                    text-2xl
-                    font-bold
-                "
+                class="text-2xl font-bold"
             >
                 0
             </div>
@@ -524,32 +228,21 @@
         </div>
 
 
-
-        <!-- TOTAL URLS -->
-
+        <!-- URLs -->
         <div
             class="
                 bg-zinc-900/70
-                border
-                border-zinc-800
+                border border-zinc-800
                 rounded-xl
                 p-4
             "
         >
 
-            <div
-                class="
-                    flex
-                    items-center
-                    gap-2
-                    mb-3
-                "
-            >
+            <div class="flex items-center gap-2 mb-3">
 
                 <div
                     class="
-                        w-8
-                        h-8
+                        w-8 h-8
                         rounded-lg
                         bg-zinc-800
                         flex
@@ -557,33 +250,21 @@
                         justify-center
                     "
                 >
-
                     <i
                         data-lucide="link"
                         class="w-4 h-4 text-zinc-300"
                     ></i>
-
                 </div>
 
-
-                <span
-                    class="
-                        text-xs
-                        text-zinc-500
-                    "
-                >
+                <span class="text-xs text-zinc-500">
                     URLs
                 </span>
 
             </div>
 
-
             <div
                 id="totalUrls"
-                class="
-                    text-2xl
-                    font-bold
-                "
+                class="text-2xl font-bold"
             >
                 0
             </div>
@@ -591,34 +272,23 @@
         </div>
 
 
-
-        <!-- TOTAL RECORDS -->
-
+        <!-- Records -->
         <div
             class="
                 col-span-2
                 lg:col-span-1
                 bg-zinc-900/70
-                border
-                border-zinc-800
+                border border-zinc-800
                 rounded-xl
                 p-4
             "
         >
 
-            <div
-                class="
-                    flex
-                    items-center
-                    gap-2
-                    mb-3
-                "
-            >
+            <div class="flex items-center gap-2 mb-3">
 
                 <div
                     class="
-                        w-8
-                        h-8
+                        w-8 h-8
                         rounded-lg
                         bg-zinc-800
                         flex
@@ -626,33 +296,21 @@
                         justify-center
                     "
                 >
-
                     <i
                         data-lucide="database"
                         class="w-4 h-4 text-zinc-300"
                     ></i>
-
                 </div>
 
-
-                <span
-                    class="
-                        text-xs
-                        text-zinc-500
-                    "
-                >
+                <span class="text-xs text-zinc-500">
                     Records
                 </span>
 
             </div>
 
-
             <div
                 id="totalRecords"
-                class="
-                    text-2xl
-                    font-bold
-                "
+                class="text-2xl font-bold"
             >
                 0
             </div>
@@ -662,74 +320,43 @@
     </section>
 
 
-
-    <!-- =========================================================
-         VIEW STATISTICS
-    ========================================================== -->
-
+    <!-- Table -->
     <section
         class="
             bg-zinc-900/70
-            border
-            border-zinc-800
+            border border-zinc-800
             rounded-xl
             overflow-hidden
         "
     >
 
-
-        <!-- TABLE HEADER -->
-
+        <!-- Table header -->
         <div
             class="
-                px-4
-                py-3
-                border-b
-                border-zinc-800
+                px-4 py-3
+                border-b border-zinc-800
                 flex
                 items-center
                 justify-between
-                gap-3
             "
         >
 
-            <div
-                class="
-                    flex
-                    items-center
-                    gap-2
-                "
-            >
+            <div class="flex items-center gap-2">
 
                 <i
                     data-lucide="bar-chart-3"
-                    class="
-                        w-4
-                        h-4
-                        text-zinc-400
-                    "
+                    class="w-4 h-4 text-zinc-400"
                 ></i>
 
-
-                <span
-                    class="
-                        text-sm
-                        font-medium
-                    "
-                >
+                <span class="text-sm font-medium">
                     View Statistics
                 </span>
 
             </div>
 
-
             <span
                 id="selectedDate"
-                class="
-                    text-xs
-                    text-zinc-500
-                    whitespace-nowrap
-                "
+                class="text-xs text-zinc-500"
             >
                 All dates
             </span>
@@ -737,47 +364,22 @@
         </div>
 
 
-
-        <!-- =====================================================
-             STATUS
-        ====================================================== -->
-
+        <!-- Status -->
         <div
             id="status"
-            class="
-                py-12
-                px-4
-                text-center
-                text-sm
-                text-zinc-500
-            "
+            class="py-12 text-center text-sm text-zinc-500"
         >
             Loading...
         </div>
 
 
-
-        <!-- =====================================================
-             RESPONSIVE TABLE
-        ====================================================== -->
-
+        <!-- Table -->
         <div
             id="tableWrapper"
-            class="
-                table-scroll
-                hidden
-            "
+            class="overflow-x-auto hidden"
         >
 
-            <table
-                class="
-                    stats-table
-                    text-sm
-                "
-            >
-
-
-                <!-- TABLE HEAD -->
+            <table class="w-full text-sm">
 
                 <thead>
 
@@ -790,82 +392,23 @@
                         "
                     >
 
-
-                        <!-- # -->
-
-                        <th
-                            class="
-                                col-number
-                                text-left
-                                px-4
-                                py-3
-                                font-medium
-                            "
-                        >
+                        <th class="text-left px-4 py-3 font-medium">
                             #
                         </th>
 
-
-
-                        <!-- DATE -->
-
-                        <th
-                            class="
-                                col-date
-                                text-left
-                                px-4
-                                py-3
-                                font-medium
-                            "
-                        >
+                        <th class="text-left px-4 py-3 font-medium">
                             Date
                         </th>
 
-
-
-                        <!-- URL -->
-
-                        <th
-                            class="
-                                col-url
-                                text-left
-                                px-4
-                                py-3
-                                font-medium
-                            "
-                        >
+                        <th class="text-left px-4 py-3 font-medium">
                             URL
                         </th>
 
-
-
-                        <!-- VIEWS -->
-
-                        <th
-                            class="
-                                col-views
-                                text-right
-                                px-4
-                                py-3
-                                font-medium
-                            "
-                        >
+                        <th class="text-right px-4 py-3 font-medium">
                             Views
                         </th>
 
-
-
-                        <!-- LAST MODIFIED -->
-
-                        <th
-                            class="
-                                col-modified
-                                text-left
-                                px-4
-                                py-3
-                                font-medium
-                            "
-                        >
+                        <th class="text-left px-4 py-3 font-medium whitespace-nowrap">
                             Last Modified
                         </th>
 
@@ -873,33 +416,21 @@
 
                 </thead>
 
-
-
-                <!-- TABLE BODY -->
-
                 <tbody
                     id="tableBody"
-                    class="
-                        divide-y
-                        divide-zinc-800/70
-                    "
+                    class="divide-y divide-zinc-800/70"
                 ></tbody>
-
 
             </table>
 
         </div>
 
-
     </section>
-
 
 </div>
 
 
-
 <script>
-
 
 /*
 |--------------------------------------------------------------------------
@@ -911,135 +442,72 @@ const API_URL =
     "https://track.mohit-raiya.workers.dev";
 
 
-
 /*
 |--------------------------------------------------------------------------
-| PASSWORD FROM URL
+| Get password from permalink
 |--------------------------------------------------------------------------
-|
-| Example:
 |
 | https://prakashraiya.pages.dev/track?pass=pkview
 |
 */
 
 const params =
-    new URLSearchParams(
-        window.location.search
-    );
-
+    new URLSearchParams(window.location.search);
 
 const PASSWORD =
     params.get("pass");
 
 
-
 /*
 |--------------------------------------------------------------------------
-| DATA CACHE
+| Data cache
 |--------------------------------------------------------------------------
 */
 
 let allData = [];
 
 
-
 /*
 |--------------------------------------------------------------------------
-| DOM ELEMENTS
+| DOM
 |--------------------------------------------------------------------------
 */
 
 const dateInput =
     document.getElementById("date");
 
-
 const searchInput =
     document.getElementById("urlSearch");
-
 
 const statusBox =
     document.getElementById("status");
 
-
 const tableWrapper =
     document.getElementById("tableWrapper");
-
 
 const tableBody =
     document.getElementById("tableBody");
 
-
 const refreshBtn =
     document.getElementById("refreshBtn");
 
-
-
-/*
-|--------------------------------------------------------------------------
-| GET TODAY LOCAL DATE
-|--------------------------------------------------------------------------
-*/
-
+    
 function getTodayLocal() {
-
-    const now =
-        new Date();
-
-
-    const year =
-        now.getFullYear();
-
-
-    const month =
-        String(
-            now.getMonth() + 1
-        ).padStart(
-            2,
-            "0"
-        );
-
-
-    const day =
-        String(
-            now.getDate()
-        ).padStart(
-            2,
-            "0"
-        );
-
-
-    return (
-        year +
-        "-" +
-        month +
-        "-" +
-        day
-    );
-
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    return (year + "-" + month + "-" + day);
 }
-
-
-
-/*
-|--------------------------------------------------------------------------
-| DEFAULT DATE = TODAY
-|--------------------------------------------------------------------------
-*/
-
-dateInput.value =
-    getTodayLocal();
-
-
+dateInput.value = getTodayLocal();
 
 /*
 |--------------------------------------------------------------------------
-| LOAD API DATA
+| Load API data
 |--------------------------------------------------------------------------
 */
 
 async function loadData() {
-
 
     if (!PASSWORD) {
 
@@ -1048,70 +516,38 @@ async function loadData() {
         );
 
         return;
-
     }
 
 
     setLoading(true);
 
 
-
     try {
 
-
         /*
-        --------------------------------------------------------------
-        | API URL
-        --------------------------------------------------------------
-        */
+         * We fetch all data once.
+         *
+         * Date and URL filtering is done locally.
+         */
 
         const apiUrl =
             API_URL +
             "/views?password=" +
-            encodeURIComponent(
-                PASSWORD
-            );
+            encodeURIComponent(PASSWORD);
 
-
-
-        /*
-        --------------------------------------------------------------
-        | FETCH
-        --------------------------------------------------------------
-        */
 
         const response =
-            await fetch(
-                apiUrl,
-                {
-                    method: "GET",
-                    cache: "no-store"
-                }
-            );
+            await fetch(apiUrl, {
+                method: "GET",
+                cache: "no-store"
+            });
 
-
-
-        /*
-        --------------------------------------------------------------
-        | JSON
-        --------------------------------------------------------------
-        */
 
         const result =
             await response.json();
 
 
-
-        /*
-        --------------------------------------------------------------
-        | ERROR
-        --------------------------------------------------------------
-        */
-
-        if (
-            !response.ok ||
-            !result.success
-        ) {
+        if (!response.ok || !result.success) {
 
             throw new Error(
                 result.error ||
@@ -1121,45 +557,25 @@ async function loadData() {
         }
 
 
-
-        /*
-        --------------------------------------------------------------
-        | SAVE DATA
-        --------------------------------------------------------------
-        */
-
         allData =
-            Array.isArray(
-                result.data
-            )
+            Array.isArray(result.data)
                 ? result.data
                 : [];
 
-
-
-        /*
-        --------------------------------------------------------------
-        | RENDER
-        --------------------------------------------------------------
-        */
 
         renderData();
 
 
     } catch (error) {
 
-
         console.error(error);
-
 
         showError(
             error.message ||
             "Unable to connect to API."
         );
 
-
     } finally {
-
 
         setLoading(false);
 
@@ -1168,19 +584,16 @@ async function loadData() {
 }
 
 
-
 /*
 |--------------------------------------------------------------------------
-| RENDER DATA
+| Render / filter data
 |--------------------------------------------------------------------------
 */
 
 function renderData() {
 
-
     const selectedDate =
         dateInput.value;
-
 
     const search =
         searchInput.value
@@ -1188,478 +601,258 @@ function renderData() {
             .toLowerCase();
 
 
-
-    /*
-    --------------------------------------------------------------
-    | COPY DATA
-    --------------------------------------------------------------
-    */
-
     let data =
         [...allData];
 
 
-
     /*
-    --------------------------------------------------------------
-    | DATE FILTER
-    --------------------------------------------------------------
-    */
+     * Date filter
+     */
 
     if (selectedDate) {
 
         data =
-            data.filter(
-                item =>
-                    String(
-                        item.view_date ||
-                        ""
-                    ) ===
-                    selectedDate
+            data.filter(item =>
+                String(item.view_date || "") ===
+                selectedDate
             );
 
     }
 
 
-
     /*
-    --------------------------------------------------------------
-    | URL SEARCH FILTER
-    --------------------------------------------------------------
-    */
+     * URL filter
+     */
 
     if (search) {
 
         data =
-            data.filter(
-                item =>
-                    String(
-                        item.url ||
-                        ""
-                    )
-                        .toLowerCase()
-                        .includes(search)
+            data.filter(item =>
+                String(item.url || "")
+                    .toLowerCase()
+                    .includes(search)
             );
 
     }
 
 
-
     /*
-    --------------------------------------------------------------
-    | SORT BY VIEWS
-    --------------------------------------------------------------
-    */
+     * Sort
+     */
 
-    data.sort(
-        (a, b) => {
+    data.sort((a, b) => {
 
-            const viewsA =
-                Number(
-                    a.views || 0
-                );
+        const viewsA =
+            Number(a.views || 0);
 
+        const viewsB =
+            Number(b.views || 0);
 
-            const viewsB =
-                Number(
-                    b.views || 0
-                );
+        return viewsB - viewsA;
 
-
-            return (
-                viewsB -
-                viewsA
-            );
-
-        }
-    );
-
+    });
 
 
     /*
-    --------------------------------------------------------------
-    | STATS
-    --------------------------------------------------------------
-    */
+     * Stats
+     */
 
-    let totalViews =
-        0;
-
+    let totalViews = 0;
 
     const urls =
         new Set();
 
 
+    data.forEach(item => {
 
-    data.forEach(
-        item => {
+        totalViews +=
+            Number(item.views || 0);
 
-            totalViews +=
-                Number(
-                    item.views || 0
-                );
+        urls.add(item.url);
 
-
-            urls.add(
-                item.url
-            );
-
-        }
-    );
+    });
 
 
-
-    /*
-    --------------------------------------------------------------
-    | TOTAL VIEWS
-    --------------------------------------------------------------
-    */
-
-    document
-        .getElementById(
-            "totalViews"
-        )
+    document.getElementById("totalViews")
         .textContent =
-        totalViews.toLocaleString(
-            "en-IN"
-        );
+        totalViews.toLocaleString("en-IN");
 
 
-
-    /*
-    --------------------------------------------------------------
-    | TOTAL URLS
-    --------------------------------------------------------------
-    */
-
-    document
-        .getElementById(
-            "totalUrls"
-        )
+    document.getElementById("totalUrls")
         .textContent =
-        urls.size.toLocaleString(
-            "en-IN"
-        );
+        urls.size.toLocaleString("en-IN");
 
 
-
-    /*
-    --------------------------------------------------------------
-    | TOTAL RECORDS
-    --------------------------------------------------------------
-    */
-
-    document
-        .getElementById(
-            "totalRecords"
-        )
+    document.getElementById("totalRecords")
         .textContent =
-        data.length.toLocaleString(
-            "en-IN"
-        );
-
+        data.length.toLocaleString("en-IN");
 
 
     /*
-    --------------------------------------------------------------
-    | SELECTED DATE
-    --------------------------------------------------------------
-    */
+     * Selected date label
+     */
 
-    document
-        .getElementById(
-            "selectedDate"
-        )
+    document.getElementById("selectedDate")
         .textContent =
         selectedDate
-            ? formatDateOnly(
-                selectedDate
-            )
+            ? formatDateOnly(selectedDate)
             : "All dates";
 
 
-
     /*
-    --------------------------------------------------------------
-    | NO DATA
-    --------------------------------------------------------------
-    */
+     * Empty
+     */
 
     if (!data.length) {
 
-
-        tableWrapper.classList.add(
-            "hidden"
-        );
-
+        tableWrapper.classList.add("hidden");
 
         statusBox.className =
-            "py-12 px-4 text-center text-sm text-zinc-500";
-
+            "py-12 text-center text-sm text-zinc-500";
 
         statusBox.textContent =
             "No data found.";
 
-
-        statusBox.classList.remove(
-            "hidden"
-        );
-
+        statusBox.classList.remove("hidden");
 
         return;
-
     }
 
 
-
     /*
-    --------------------------------------------------------------
-    | TABLE HTML
-    --------------------------------------------------------------
-    */
+     * Table
+     */
 
     tableBody.innerHTML =
-        data
-            .map(
-                (item, index) => {
+        data.map((item, index) => {
+
+            return `
+
+                <tr class="
+                    hover:bg-zinc-800/30
+                    transition
+                ">
+
+                    <td class="
+                        px-4 py-3
+                        text-zinc-600
+                        whitespace-nowrap
+                    ">
+                        ${index + 1}
+                    </td>
 
 
-                    const url =
-                        String(
-                            item.url ||
-                            "-"
-                        );
+                    <td class="
+                        px-4 py-3
+                        text-zinc-400
+                        whitespace-nowrap
+                    ">
+                        ${escapeHtml(
+                            item.view_date || "-"
+                        )}
+                    </td>
 
 
+                    <td class="
+                        px-4 py-3
+                        max-w-[450px]
+                    ">
 
-                    return `
-
-                        <tr
+                        <a
+                            href="${escapeAttribute(item.url || "#")}"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             class="
-                                hover:bg-zinc-800/30
-                                transition
+                                text-zinc-300
+                                hover:text-white
+                                hover:underline
+                                break-all
                             "
                         >
+                            ${escapeHtml(
+                                item.url || "-"
+                            )}
+                        </a>
+
+                    </td>
 
 
-                            <!-- NUMBER -->
-
-                            <td
-                                class="
-                                    col-number
-                                    px-4
-                                    py-3
-                                    text-zinc-600
-                                    align-top
-                                "
-                            >
-                                ${index + 1}
-                            </td>
+                    <td class="
+                        px-4 py-3
+                        text-right
+                        font-semibold
+                        text-white
+                        whitespace-nowrap
+                    ">
+                        ${Number(
+                            item.views || 0
+                        ).toLocaleString("en-IN")}
+                    </td>
 
 
+                    <td class="
+                        px-4 py-3
+                        text-zinc-500
+                        whitespace-nowrap
+                    ">
+                        ${formatTimestamp(
+                            item.last_modified
+                        )}
+                    </td>
 
-                            <!-- DATE -->
+                </tr>
 
-                            <td
-                                class="
-                                    col-date
-                                    px-4
-                                    py-3
-                                    text-zinc-400
-                                    align-top
-                                "
-                            >
-                                ${escapeHtml(
-                                    item.view_date ||
-                                    "-"
-                                )}
-                            </td>
+            `;
+
+        }).join("");
 
 
+    statusBox.classList.add("hidden");
 
-                            <!-- URL -->
-
-                            <td
-                                class="
-                                    col-url
-                                    url-cell
-                                    px-4
-                                    py-3
-                                    align-top
-                                "
-                            >
-
-                                <a
-                                    href="${escapeAttribute(
-                                        item.url ||
-                                        "#"
-                                    )}"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    title="${escapeAttribute(
-                                        url
-                                    )}"
-                                    class="
-                                        url-link
-                                        text-zinc-300
-                                        hover:text-white
-                                        hover:underline
-                                    "
-                                >
-                                    ${escapeHtml(
-                                        url
-                                    )}
-                                </a>
-
-                            </td>
-
-
-
-                            <!-- VIEWS -->
-
-                            <td
-                                class="
-                                    col-views
-                                    px-4
-                                    py-3
-                                    text-right
-                                    font-semibold
-                                    text-white
-                                    align-top
-                                "
-                            >
-                                ${Number(
-                                    item.views || 0
-                                ).toLocaleString(
-                                    "en-IN"
-                                )}
-                            </td>
-
-
-
-                            <!-- LAST MODIFIED -->
-
-                            <td
-                                class="
-                                    col-modified
-                                    px-4
-                                    py-3
-                                    text-zinc-500
-                                    align-top
-                                "
-                            >
-                                ${formatTimestamp(
-                                    item.last_modified
-                                )}
-                            </td>
-
-
-                        </tr>
-
-                    `;
-
-                }
-            )
-            .join("");
-
-
-
-    /*
-    --------------------------------------------------------------
-    | SHOW TABLE
-    --------------------------------------------------------------
-    */
-
-    statusBox.classList.add(
-        "hidden"
-    );
-
-
-    tableWrapper.classList.remove(
-        "hidden"
-    );
+    tableWrapper.classList.remove("hidden");
 
 }
 
 
-
 /*
 |--------------------------------------------------------------------------
-| LOADING STATE
+| Loading state
 |--------------------------------------------------------------------------
 */
 
-function setLoading(
-    loading
-) {
-
+function setLoading(loading) {
 
     if (loading) {
 
-
-        refreshBtn.disabled =
-            true;
-
+        refreshBtn.disabled = true;
 
         refreshBtn.classList.add(
             "opacity-50",
             "cursor-not-allowed"
         );
 
-
-
         statusBox.className =
             "py-12 text-center text-sm text-zinc-500";
 
-
-
         statusBox.innerHTML = `
-
-            <div
-                class="
-                    flex
-                    items-center
-                    justify-center
-                    gap-2
-                "
-            >
-
+            <div class="flex items-center justify-center gap-2">
                 <i
                     data-lucide="loader-circle"
-                    class="
-                        w-4
-                        h-4
-                        animate-spin
-                    "
+                    class="w-4 h-4 animate-spin"
                 ></i>
-
                 Loading...
-
             </div>
-
         `;
 
+        statusBox.classList.remove("hidden");
 
-
-        statusBox.classList.remove(
-            "hidden"
-        );
-
-
-        tableWrapper.classList.add(
-            "hidden"
-        );
-
+        tableWrapper.classList.add("hidden");
 
         lucide.createIcons();
 
-
     } else {
 
-
-        refreshBtn.disabled =
-            false;
-
+        refreshBtn.disabled = false;
 
         refreshBtn.classList.remove(
             "opacity-50",
@@ -1671,38 +864,24 @@ function setLoading(
 }
 
 
-
 /*
 |--------------------------------------------------------------------------
-| ERROR
+| Error
 |--------------------------------------------------------------------------
 */
 
-function showError(
-    message
-) {
-
+function showError(message) {
 
     statusBox.className =
         "py-12 px-4 text-center text-sm text-red-400";
 
-
-
     statusBox.innerHTML = `
 
-        <div
-            class="
-                flex
-                flex-col
-                items-center
-                gap-3
-            "
-        >
+        <div class="flex flex-col items-center gap-3">
 
             <div
                 class="
-                    w-10
-                    h-10
+                    w-10 h-10
                     rounded-full
                     bg-red-500/10
                     flex
@@ -1710,126 +889,71 @@ function showError(
                     justify-center
                 "
             >
-
                 <i
                     data-lucide="circle-alert"
                     class="w-5 h-5"
                 ></i>
-
             </div>
 
-
             <div>
-                ${escapeHtml(
-                    message
-                )}
+                ${escapeHtml(message)}
             </div>
 
         </div>
 
     `;
 
+    statusBox.classList.remove("hidden");
 
-
-    statusBox.classList.remove(
-        "hidden"
-    );
-
-
-    tableWrapper.classList.add(
-        "hidden"
-    );
-
+    tableWrapper.classList.add("hidden");
 
     lucide.createIcons();
 
 }
 
 
-
 /*
 |--------------------------------------------------------------------------
-| DATE FORMAT
+| Date formatting
 |--------------------------------------------------------------------------
 */
 
-function formatDateOnly(
-    date
-) {
-
+function formatDateOnly(date) {
 
     if (!date) {
-
         return "-";
-
     }
-
-
 
     const parts =
         date.split("-");
 
-
-
-    if (
-        parts.length !== 3
-    ) {
-
+    if (parts.length !== 3) {
         return date;
-
     }
 
-
-
-    return (
-        parts[2] +
-        "-" +
-        parts[1] +
-        "-" +
-        parts[0]
-    );
+    return `${parts[2]}-${parts[1]}-${parts[0]}`;
 
 }
 
 
-
 /*
 |--------------------------------------------------------------------------
-| TIMESTAMP FORMAT
+| Timestamp formatting
 |--------------------------------------------------------------------------
 */
 
-function formatTimestamp(
-    timestamp
-) {
-
+function formatTimestamp(timestamp) {
 
     if (!timestamp) {
-
         return "-";
-
     }
-
-
 
     const date =
-        new Date(
-            Number(timestamp)
-        );
+        new Date(Number(timestamp));
 
-
-
-    if (
-        isNaN(
-            date.getTime()
-        )
-    ) {
-
+    if (isNaN(date.getTime())) {
         return "-";
-
     }
-
-
 
     return date.toLocaleString(
         "en-IN",
@@ -1842,87 +966,43 @@ function formatTimestamp(
 }
 
 
-
 /*
 |--------------------------------------------------------------------------
-| HTML ESCAPE
+| HTML escape
 |--------------------------------------------------------------------------
 */
 
-function escapeHtml(
-    value
-) {
+function escapeHtml(value) {
 
     return String(value)
-
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-
-        .replace(
-            /</g,
-            "&lt;"
-        )
-
-        .replace(
-            />/g,
-            "&gt;"
-        )
-
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-
-        .replace(
-            /'/g,
-            "&#039;"
-        );
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 
 }
 
 
-
 /*
 |--------------------------------------------------------------------------
-| ATTRIBUTE ESCAPE
+| Attribute escape
 |--------------------------------------------------------------------------
 */
 
-function escapeAttribute(
-    value
-) {
+function escapeAttribute(value) {
 
     return String(value)
-
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-
-        .replace(
-            /</g,
-            "&lt;"
-        )
-
-        .replace(
-            />/g,
-            "&gt;"
-        );
-
+        .replace(/&/g, "&amp;")
+        .replace(/"/g, "&quot;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
 }
-
 
 
 /*
 |--------------------------------------------------------------------------
-| DATE FILTER
+| Filters
 |--------------------------------------------------------------------------
 */
 
@@ -1931,36 +1011,23 @@ dateInput.addEventListener(
     renderData
 );
 
-
-
-/*
-|--------------------------------------------------------------------------
-| URL SEARCH
-|--------------------------------------------------------------------------
-*/
-
 searchInput.addEventListener(
     "input",
     renderData
 );
 
 
-
 /*
 |--------------------------------------------------------------------------
-| INITIALIZE
+| Initial load
 |--------------------------------------------------------------------------
 */
 
 lucide.createIcons();
 
-
 loadData();
-
 
 </script>
 
-
 </body>
-
 </html>
